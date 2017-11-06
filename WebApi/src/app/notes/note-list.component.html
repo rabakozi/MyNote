@@ -1,0 +1,19 @@
+<div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class='table-responsive' style="width:200px; position:fixed; height:100%;">
+        <table class='table'
+               *ngIf='notes && notes.length'>
+          <tbody>
+            <tr *ngFor="let note of notes; let i = index" (click)="increaseNum()">
+              <td>{{note.id}}</td>
+              <td>{{note.title}}</td>
+              <td>{{note.lead}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-12" style="padding-left: 215px">{{clickNumber}}</div>
+    </div>
+  </div>
+</div>
