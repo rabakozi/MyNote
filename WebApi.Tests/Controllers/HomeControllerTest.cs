@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WebApi;
-using WebApi.Controllers;
+using MyNote.WebApi.Controllers;
 
 namespace WebApi.Tests.Controllers
 {
