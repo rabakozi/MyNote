@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MyNote.WebApi.Controllers;
 
-namespace WebApi.Tests.Controllers
+namespace MyNote.WebApi.Tests.Controllers
 {
     [TestClass]
     public class HomeControllerTest

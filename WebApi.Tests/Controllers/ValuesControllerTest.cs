@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MyNote.WebApi.Controllers;
 
-namespace WebApi.Tests.Controllers
+namespace MyNote.WebApi.Tests.Controllers
 {
     [TestClass]
     public class ValuesControllerTest

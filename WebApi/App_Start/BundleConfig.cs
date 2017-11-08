@@ -1,7 +1,6 @@
-﻿using System.Web;
 using System.Web.Optimization;
 
-namespace WebApi
+namespace MyNote.WebApi
 {
     public class BundleConfig
     {

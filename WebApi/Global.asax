@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="WebApi.WebApiApplication" Language="C#" %>
+<%@ Application Codebehind="Global.asax.cs" Inherits="MyNote.WebApi.WebApiApplication" Language="C#" %>
