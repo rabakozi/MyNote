@@ -16,10 +16,19 @@ namespace MyNote.WebApi
 
       routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+//      routes.MapRoute(
+//    name: "Default",
+//    url: "{*anything}",
+//    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+
+
+//);
+
       routes.MapRoute(
-    name: "Default",
-    url: "{*anything}",
-    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+     "Default", // Route name
+     "{controller}/{action}/{id}", // URL with parameters
+     new { controller = "Home", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
+     new string[] { "MyNote.WebApi.Controllers" }
 );
 
       //routes.Add(new Route(
