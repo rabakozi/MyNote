@@ -8,12 +8,12 @@ import { NoteListComponent } from './note-list.component';
 @NgModule({
   imports: [
     CommonModule,
-    //RouterModule.forChild([
-    //  { path: 'notes', component: NoteListComponent },
-    //  {
-    //    path: 'notes/:id', component: NoteDetailComponent
-    //  }
-    //])
+    RouterModule.forChild([
+      { path: 'notes', component: NoteListComponent },
+      {
+        path: 'notes/:id', component: NoteDetailComponent
+      }
+    ])
   ],
   declarations: [NoteDetailComponent, NoteListComponent],
   exports: [NoteListComponent]

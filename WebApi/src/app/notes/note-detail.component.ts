@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-note-detail',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NoteDetailComponent implements OnInit {
 
-  constructor() { }
+  nodeId: number;
+
+  constructor(private route: ActivatedRoute) {
+    route.params.subscribe(params => {
+      this.nodeId = params['id'];
+    });
+  }
 
   ngOnInit() {
+    
   }
 
 }
