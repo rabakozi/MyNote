@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { NoteDetailComponent } from './note-detail.component';
 import { NoteListComponent } from './note-list.component';
+import { NoteListItemComponent } from './note-list-item.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { NoteListComponent } from './note-list.component';
       }
     ])
   ],
-  declarations: [NoteDetailComponent, NoteListComponent],
+  declarations: [NoteDetailComponent, NoteListComponent, NoteListItemComponent],
   exports: [NoteListComponent]
 })
 export class NoteModule { }
