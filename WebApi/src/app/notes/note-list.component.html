@@ -1,20 +1,20 @@
 <div>
+  <div>
+      <a class="btn btn-link btn-sm" style="padding-right: 0" (click)="createNew()">
+        <i class="fa fa-plus-circle fa-3x" aria-hidden="true"></i>
+      </a>
+  </div>
   <div class="container-fluid">
-    <div class="row">
-      <div class='table-responsive' style="width:200px; position:fixed; height:100%;">
-        <table class='table'
-               *ngIf='notes && notes.length'>
-          <tbody>
-          <tr *ngFor="let note of notes; let i = index" (click)="increaseNum()">
-            <td><a [routerLink]="['/notes', note.id]">{{note.id}}</a></td>
-            <td>{{note.title}}</td>
-            <td>{{note.lead}}</td>
-          </tr>
-          </tbody>
-        </table>
+    <div class="row" style="z-index: 1000">
+      <div class="table-responsive" style="width:200px; position:fixed; height:100%;">
+        <div *ngIf="notes && notes.length">
+          <div class="list-group" *ngFor="let note of notes">
+            <app-note-list-item [note]="note"></app-note-list-item>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-md-12" style="padding-left: 215px">
+    <div class="col-md-12" style="padding-left: 215px;">
       <router-outlet></router-outlet>
     </div>
   </div>

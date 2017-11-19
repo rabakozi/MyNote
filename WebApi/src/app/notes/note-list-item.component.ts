@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { INote } from "./note";
+import { NoteService } from "./note.service";
 
 @Component({
   selector: 'app-note-list-item',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NoteListItemComponent implements OnInit {
 
-  constructor() { }
+  @Input() note: INote;
+
+  constructor(private noteService: NoteService) {}
 
   ngOnInit() {
+  }
+
+  public deleteNote()
+  {
+    //this.noteService.deleteNote(this.note.id);
+    this.noteService.emitChange({ id: this.note.id, action: "delete" });
   }
 
 }

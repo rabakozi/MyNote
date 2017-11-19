@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 import { INote } from "./note";
 import { NoteService } from "./note.service"
+
 
 @Component({
   selector: 'app-note-list',
@@ -11,16 +13,31 @@ import { NoteService } from "./note.service"
 export class NoteListComponent implements OnInit {
 
   notes: INote[] = [];
-  clickNumber: number = 0
 
-  constructor(private noteService: NoteService) { }
-
-  ngOnInit() {
-    this.notes = this.noteService.getProducts();
+  constructor(private noteService: NoteService, private router: Router) {
+    noteService.changeEmitted$.subscribe(
+      evt => {
+        switch (evt.action)
+        {
+          case 'delete':
+            this.noteService.deleteNote(evt.id);
+            this.notes = this.noteService.getNoteList();
+            break;
+          case 'add':
+            console.log('add');
+            this.notes = this.noteService.getNoteList();
+            break;
+        }
+      });
   }
 
-  increaseNum(): void {
-    this.clickNumber++;
+  ngOnInit() {
+    this.notes = this.noteService.getNoteList();
+  }
+
+
+  public createNew() {
+    this.router.navigate(['/notes/new']);
   }
 
 }

@@ -1,3 +1,18 @@
-<p>
-  note-list-item works!
-</p>
+<div style="position: relative" >
+  <a href="#" [routerLink]="['/notes', note.id]" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{note.title}}</h5>
+      <small>3 days ago</small>
+    </div>
+    <p class="mb-1">{{note.lead}}</p>
+  </a>
+  <div style="position: absolute; top: 5px; right: 5px">
+    <a class="btn btn-link btn-sm" style="padding-right: 0" (click)="shareNote">
+      <i class="fa fa-share-square fa-2x" aria-hidden="true"></i>
+    </a>
+    <a class="btn btn-link btn-sm" style="padding-left: 0" (click)="deleteNote()">
+      <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+    </a>
+  </div>
+</div>
+
