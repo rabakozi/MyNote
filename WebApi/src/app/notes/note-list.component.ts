@@ -24,7 +24,9 @@ export class NoteListComponent implements OnInit {
             this.notes = this.noteService.getNoteList();
             break;
           case 'add':
-            console.log('add');
+            this.notes = this.noteService.getNoteList();
+            break;
+          case 'update':
             this.notes = this.noteService.getNoteList();
             break;
         }
