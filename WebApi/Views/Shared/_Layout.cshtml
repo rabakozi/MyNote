@@ -14,7 +14,7 @@
       }
     }
 
-    string runMode = "";//CodeProject.Angular4.Portal.Properties.Settings.Default.RunMode;
+    string runMode = "";
 
     IEnumerable<string> fileEntries = Enumerable.Empty<string>();
     List<string> bundles = new List<string>();
@@ -51,11 +51,11 @@
 
   @if (HttpContext.Current.IsDebuggingEnabled)
   {
-    <base href="/">
+    <base href="./">
   }
   else
   {
-    <base href="/">
+    <base href="./">
   }
 
   <script>

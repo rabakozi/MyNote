@@ -38,7 +38,7 @@ export class NoteListComponent implements OnInit {
   }
 
 
-  public createNew() {
+  createNew() {
     this.router.navigate(['/notes/new']);
   }
 
