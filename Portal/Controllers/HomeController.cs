@@ -1,6 +1,6 @@
 using System.Web.Mvc;
 
-namespace MyNote.WebApi.Controllers
+namespace MyNote.Portal.Controllers
 {
     public class HomeController : Controller
     {

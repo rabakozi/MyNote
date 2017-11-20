@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace MyNote.WebApi
+namespace MyNote.Portal
 {
   public class RouteConfig
   {
@@ -28,7 +28,7 @@ namespace MyNote.WebApi
      "Default", // Route name
      "{controller}/{action}/{id}", // URL with parameters
      new { controller = "Home", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
-     new string[] { "MyNote.WebApi.Controllers" }
+     new string[] { "MyNote.Portal.Controllers" }
 );
 
       //routes.Add(new Route(

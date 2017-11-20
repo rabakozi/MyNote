@@ -1,6 +1,6 @@
 using System.Web.Http;
 
-namespace MyNote.WebApi
+namespace MyNote.Portal
 {
     public static class WebApiConfig
     {

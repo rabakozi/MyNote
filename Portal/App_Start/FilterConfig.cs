@@ -1,6 +1,6 @@
 using System.Web.Mvc;
 
-namespace MyNote.WebApi
+namespace MyNote.Portal
 {
     public class FilterConfig
     {
