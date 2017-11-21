@@ -15,6 +15,11 @@ namespace MyNote.Api
             WebApiConfig.Register(config);
             SwaggerConfig.Register(config);
 
+            // Setup IoC container
+            var container = AutofacConfig.RegisterComponents(config);
+
+            appBuilder.UseAutofacMiddleware(container);
+            appBuilder.UseAutofacWebApi(config);
             appBuilder.UseWebApi(config);
         }
     }

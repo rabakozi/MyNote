@@ -12,7 +12,7 @@ namespace MyNote.Api.Controllers
     /// <summary>
     /// This controller implements Notes CRUD functionalities
     /// </summary>
-    [Route("api/[controller]")]
+    [RoutePrefix("api/notes")]
     public class NotesController : ApiController
     {
         private readonly INotesRepository notesRepository;
@@ -63,12 +63,12 @@ namespace MyNote.Api.Controllers
             return notesRepository.Delete(id);
         }
 
-        /// <summary>
-        /// Returns a list of Note digest of a user
-        /// </summary>
-        /// <returns>IEnumerable&lt;Note&gt;</returns>
-        [Route("{userId}")]
-        [HttpGet]
+        ///// <summary>
+        ///// Returns a list of Note digest of a user
+        ///// </summary>
+        ///// <returns>IEnumerable&lt;Note&gt;</returns>
+        //[Route("{userId}")]
+        //[HttpGet]
         public Task<IEnumerable<NoteDigest>> GetByUserId(int userId)
         {
             return notesRepository.GetAllNoteDigestByUserId(userId);
