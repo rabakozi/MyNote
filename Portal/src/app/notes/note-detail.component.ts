@@ -15,21 +15,29 @@ export class NoteDetailComponent implements OnInit {
   isNew: boolean;
 
 
-  constructor(private route: ActivatedRoute, private noteService: NoteService) {
-    route.params.subscribe(params => {
+  constructor(private route: ActivatedRoute, private noteService: NoteService) { }
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
       if (params['id'] === 'new') {
         this.isNew = true;
         this.note = this.getEmptyNote();
       } else {
         this.isNew = false;
         this.noteId = params['id'];
-        this.note = this.noteService.getNote(this.noteId);
+        this.noteService.getNote(this.noteId)
+          .subscribe(response => {
+            this.note = response;
+          }, (error: Response) => {
+            if (error.status === 404) {
+              alert('no post with this id');
+            } else {
+              alert('error happened');
+              console.log(error);
+            }
+          });
       }
     });
-  }
-
-  ngOnInit() {
-
   }
 
   onChange() {

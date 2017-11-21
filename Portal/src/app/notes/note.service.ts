@@ -28,8 +28,8 @@ export class NoteService {
 
   getNoteList(): Observable<INote[]> {
     return this.http.get<INote[]>(this.baseUrl + 'api/notes')
-      .do(data => console.log(JSON.stringify(data)));
-    //   .catch(s => console.log('Error!: '));
+      .do(data => console.log(JSON.stringify(data)))
+      .catch((error: Response) => { return Observable.throw(null)});
   }
 
   getNote(id: number): Observable<INote> {
@@ -39,7 +39,7 @@ export class NoteService {
     //   .catch(s => console.log('Error!: '));
   }
 
-  updateNote(note: INote): Observable<any> {
+  updateNote(note: INote): Observable<INote> {
     let url = this.baseUrl + 'api/notes/' + note.id;
     let body = JSON.stringify(note);
     return this.http
@@ -52,7 +52,7 @@ export class NoteService {
     //this.notes[i] = Object.assign({}, note);
   }
 
-  addNote(note: INote): INote {
+  createNote(note: INote): INote {
     const lastNote = this.notes.reduce((prev, current) => (prev.id > current.id) ? prev : current);
     note.id = lastNote.id+1;
     this.notes.push(Object.assign({}, note));
