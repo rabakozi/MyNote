@@ -21,7 +21,11 @@ export class NoteListComponent implements OnInit {
         {
           case 'delete':
             this.noteService.deleteNote(evt.id);
-            this.notes = this.noteService.getNoteList();
+
+            this.noteService.getNoteList().subscribe(
+              notes => this.notes = notes,
+              error => console.log(error));
+
             break;
           case 'add':
             this.notes = this.noteService.getNoteList();
@@ -34,7 +38,9 @@ export class NoteListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.notes = this.noteService.getNoteList();
+    this.noteService.getNoteList().subscribe(
+      notes => this.notes = notes,
+      error => console.log(error));
   }
 
 
