@@ -19,16 +19,28 @@ namespace Api
     {
         public void Configuration(IAppBuilder app)
         {
+            // Get HttpConfiguration in OWIN instead of using GlobalConfiguration
             var config = new HttpConfiguration();
 
-            //ConfigureOAuth(app);
-
             WebApiConfig.Register(config);
-            //app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            //app.UseWebApi(config);
-            
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<XNoteDbContext, Configuration>());
+            SwaggerConfig.Register(config);
 
+            // Setup IoC container
+            var container = AutofacConfig.RegisterComponents(config);
+
+            // OWIN WEB API SETUP:
+
+            // Register the Autofac middleware FIRST, then the Autofac Web API middleware,
+            // and finally the standard Web API middleware.
+            // Registers components registered in AutofacConfig class
+            app.UseAutofacMiddleware(container);
+
+            //
+            // Other configuration here
+            //
+
+            app.UseAutofacWebApi(config);
+            app.UseWebApi(config);
         }
 
         //public void ConfigureOAuth(IAppBuilder app)
@@ -75,35 +87,5 @@ namespace Api
         //        map.RunSignalR(new HubConfiguration());
         //    });
         //}
-    }
-
-    public class Startup
-    {
-        public void Configuration(IAppBuilder app)
-        {
-            // Get HttpConfiguration in OWIN instead of using GlobalConfiguration
-            var config = new HttpConfiguration();
-
-            WebApiConfig.Register(config);
-            SwaggerConfig.Register(config);
-
-            // Setup IoC container
-            var container = AutofacConfig.RegisterComponents(config);
-
-            // OWIN WEB API SETUP:
-
-            // Register the Autofac middleware FIRST, then the Autofac Web API middleware,
-            // and finally the standard Web API middleware.
-            // Registers components registered in AutofacConfig class
-            app.UseAutofacMiddleware(container);
-
-            //
-            // Other configuration here
-            //
-
-            app.UseAutofacWebApi(config);
-            app.UseWebApi(config);
-        }
-
     }
 }

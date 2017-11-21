@@ -2,10 +2,8 @@
 using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
-using SB.Logging;
-using SB.Logging.Self;
 
-namespace SB.BetTracer2.Api.Host
+namespace Api
 {
     public static class AutofacConfig
     {
@@ -14,11 +12,11 @@ namespace SB.BetTracer2.Api.Host
             var builder = new ContainerBuilder();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            var logger = new Logger(new SelfLogger());
-            builder.RegisterInstance(logger).As<ILogger>().SingleInstance();
+            //var logger = new Logger(new SelfLogger());
+            //builder.RegisterInstance(logger).As<ILogger>().SingleInstance();
 
-            builder.RegisterModule(new Infrastructure.BetTracer2BetHistory.AutofacModule());
-            builder.RegisterModule(new Api.BusinessLogic.AutofacModule());
+            //builder.RegisterModule(new Infrastructure.BetTracer2BetHistory.AutofacModule());
+            //builder.RegisterModule(new Api.BusinessLogic.AutofacModule());
 
 
             var container = builder.Build();
