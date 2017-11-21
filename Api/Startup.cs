@@ -19,60 +19,91 @@ namespace Api
     {
         public void Configuration(IAppBuilder app)
         {
-            HttpConfiguration config = new HttpConfiguration();
+            var config = new HttpConfiguration();
 
-            ConfigureOAuth(app);
+            //ConfigureOAuth(app);
 
             WebApiConfig.Register(config);
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            app.UseWebApi(config);
+            //app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            //app.UseWebApi(config);
+            
             //Database.SetInitializer(new MigrateDatabaseToLatestVersion<XNoteDbContext, Configuration>());
 
         }
 
-        public void ConfigureOAuth(IAppBuilder app)
+        //public void ConfigureOAuth(IAppBuilder app)
+        //{
+        //    //use a cookie to temporarily store information about a user logging in with a third party login provider
+        //    app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
+        //    OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
+
+        //    OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+        //    {
+
+        //        AllowInsecureHttp = true,
+        //        TokenEndpointPath = new PathString("/token"),
+        //        AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
+        //        Provider = new SimpleAuthorizationServerProvider(),
+        //        RefreshTokenProvider = new SimpleRefreshTokenProvider()
+        //    };
+
+        //    // Token Generation
+        //    app.UseOAuthAuthorizationServer(OAuthServerOptions);
+        //    app.UseOAuthBearerAuthentication(OAuthBearerOptions);
+
+        //    //Configure Google External Login
+        //    GoogleAuthOptions = new GoogleOAuth2AuthenticationOptions()
+        //    {
+        //        ClientId = "251633117325-aj3piklgegfggonlhegeip6oa96ro0hj.apps.googleusercontent.com",
+        //        ClientSecret = "XOEefQauSKVUDUosrTD-m-QF",
+        //        Provider = new GoogleAuthProvider()
+        //    };
+        //    app.UseGoogleAuthentication(GoogleAuthOptions);
+
+        //    //Configure Facebook External Login
+        //    FacebookAuthOptions = new FacebookAuthenticationOptions()
+        //    {
+        //        AppId = "332003483936366",
+        //        AppSecret = "e98b8b9a55a8620b20bcd2e4c5e07ee8",
+        //        Provider = new FacebookAuthProvider()
+        //    };
+        //    app.UseFacebookAuthentication(FacebookAuthOptions);
+
+        //    app.Map("/signalr", map =>
+        //    {
+        //        map.UseCors(CorsOptions.AllowAll);
+        //        map.RunSignalR(new HubConfiguration());
+        //    });
+        //}
+    }
+
+    public class Startup
+    {
+        public void Configuration(IAppBuilder app)
         {
-            //use a cookie to temporarily store information about a user logging in with a third party login provider
-            app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
-            OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
+            // Get HttpConfiguration in OWIN instead of using GlobalConfiguration
+            var config = new HttpConfiguration();
 
-            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
-            {
+            WebApiConfig.Register(config);
+            SwaggerConfig.Register(config);
 
-                AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
-                Provider = new SimpleAuthorizationServerProvider(),
-                RefreshTokenProvider = new SimpleRefreshTokenProvider()
-            };
+            // Setup IoC container
+            var container = AutofacConfig.RegisterComponents(config);
 
-            // Token Generation
-            app.UseOAuthAuthorizationServer(OAuthServerOptions);
-            app.UseOAuthBearerAuthentication(OAuthBearerOptions);
+            // OWIN WEB API SETUP:
 
-            //Configure Google External Login
-            GoogleAuthOptions = new GoogleOAuth2AuthenticationOptions()
-            {
-                ClientId = "251633117325-aj3piklgegfggonlhegeip6oa96ro0hj.apps.googleusercontent.com",
-                ClientSecret = "XOEefQauSKVUDUosrTD-m-QF",
-                Provider = new GoogleAuthProvider()
-            };
-            app.UseGoogleAuthentication(GoogleAuthOptions);
+            // Register the Autofac middleware FIRST, then the Autofac Web API middleware,
+            // and finally the standard Web API middleware.
+            // Registers components registered in AutofacConfig class
+            app.UseAutofacMiddleware(container);
 
-            //Configure Facebook External Login
-            FacebookAuthOptions = new FacebookAuthenticationOptions()
-            {
-                AppId = "332003483936366",
-                AppSecret = "e98b8b9a55a8620b20bcd2e4c5e07ee8",
-                Provider = new FacebookAuthProvider()
-            };
-            app.UseFacebookAuthentication(FacebookAuthOptions);
+            //
+            // Other configuration here
+            //
 
-            app.Map("/signalr", map =>
-            {
-                map.UseCors(CorsOptions.AllowAll);
-                map.RunSignalR(new HubConfiguration());
-            });
+            app.UseAutofacWebApi(config);
+            app.UseWebApi(config);
         }
+
     }
 }
