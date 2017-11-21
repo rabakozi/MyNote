@@ -1,8 +1,8 @@
-﻿using Microsoft.Owin.Hosting;
-using System;
+﻿using System;
 using System.Net.Http;
+using Microsoft.Owin.Hosting;
 
-namespace Api
+namespace MyNote.Api
 {
     public class Program
     {
