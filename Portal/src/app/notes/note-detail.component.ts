@@ -10,78 +10,65 @@ import { NoteService } from "./note.service"
 })
 export class NoteDetailComponent implements OnInit {
 
-  noteId: number;
   note: INote;
   isNew: boolean;
-
 
   constructor(private route: ActivatedRoute, private noteService: NoteService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      if (params['id'] === 'new') {
+      let id = params['id'];
+      if (id === 'new') {
         this.isNew = true;
         this.note = this.getEmptyNote();
       } else {
         this.isNew = false;
-        this.noteId = params['id'];
-        this.noteService.getNote(this.noteId)
-          .subscribe(response => {
-            this.note = response;
-          }, (error: Response) => {
-            if (error.status === 404) {
-              alert('no post with this id');
-            } else {
-              alert('error happened');
-              console.log(error);
-            }
-          });
+        this.getNote(id);
       }
     });
   }
 
   onChange() {
     if (!this.isNew) {
-      this.noteService.updateNote(this.note);
-      this.noteUpdated();
+      this.updateNote();
     } else {
-
-      this.noteService.createNote(this.note)
-        .subscribe(respose => {
-          this.isNew = false;
-          this.noteCreated();
-        });
+      this.createNote();
     }
   }
 
-  //createNote() {
-  //  this.noteService.createNote(this.note)
-  //    .subscribe(response => {
-  //      this.noteCreated();
-  //    });
-  //}
+  getNote(id) {
+    this.noteService.getNote(id)
+      .subscribe(response => this.note = response,
+      (error: Response) => {
+        if (error.status === 404) {
+          alert('no post with this id');
+        } else {
+          alert('error happened');
+          console.log(error);
+        }
+      });
+  }
+
+  createNote() {
+    this.noteService.createNote(this.note)
+      .subscribe(response => {
+        this.isNew = false;
+        this.noteService.emitChange({ action: 'create', subject: this.note });
+      });
+  }
+
+  updateNote() {
+    this.noteService.updateNote(this.note)
+      .subscribe(response => {
+        this.noteService.emitChange({ action: 'update', subject: this.note });
+      });
+  }
 
   deleteNote() {
     this.noteService.deleteNote(this.note.id)
       .subscribe(response => {
-        this.noteDeleted();
+        this.noteService.emitChange({ action: 'delete', subject: this.note });
       });
-  }
-
-
-
-
-
-  private noteDeleted() {
-    this.noteService.emitChange({ id: this.note.id, action: 'delete' });
-  }
-
-  private noteCreated() {
-    this.noteService.emitChange({ id: this.note.id, action: 'add' });
-  }
-
-  private noteUpdated() {
-    this.noteService.emitChange({ id: this.note.id, action: 'update' });
   }
 
   private getEmptyNote(): INote {

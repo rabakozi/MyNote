@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
+import { HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class NoteService {
@@ -22,8 +23,10 @@ export class NoteService {
 
   // end of event handling part
 
-  private url = 'localhost:9000/api/notes';
-  
+  private url = 'http://localhost:9000/api/notes';
+  private headers = new HttpHeaders().set('Content-Type', 'application/json');
+  //.set('Authorization', 'my-auth-token');
+
   constructor(private http: HttpClient) { }
 
   getNoteList(): Observable<INote[]> {
@@ -37,12 +40,15 @@ export class NoteService {
 
   updateNote(note: INote): Observable<INote> {
     let body = JSON.stringify(note);
-    return this.http.put(this.url, body);
+    return this.http.put(this.url, body, { headers: this.headers }).
+      do(() => {
+        this.emitChange({ action: 'update', subject: note });
+      });
   }
 
   createNote(note: INote): Observable<INote> {
     let body = JSON.stringify(note);
-    return this.http.post<INote>(this.url + '/' + note.id, body);
+    return this.http.post<INote>(this.url, body, { headers: this.headers });
   }
 
   deleteNote(id: number) {

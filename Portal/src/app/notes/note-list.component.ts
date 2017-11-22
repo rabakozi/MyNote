@@ -17,21 +17,18 @@ export class NoteListComponent implements OnInit {
   constructor(private noteService: NoteService, private router: Router) {
     noteService.changeEmitted$.subscribe(
       evt => {
+        let note = evt.subject as INote;
+        let index = this.notes.findIndex(n => n.id == note.id);
         switch (evt.action)
         {
           case 'delete':
-            this.noteService.deleteNote(evt.id);
-
-            this.noteService.getNoteList().subscribe(
-              notes => this.notes = notes,
-              error => console.log(error));
-
+            this.notes.splice(index, 1);
             break;
-          case 'add':
-            this.notes = this.noteService.getNoteList();
+          case 'create':
+            this.notes.splice(0, 0, note);
             break;
           case 'update':
-            this.notes = this.noteService.getNoteList();
+            this.notes[index] = note;
             break;
         }
       });
@@ -39,7 +36,9 @@ export class NoteListComponent implements OnInit {
 
   ngOnInit() {
     this.noteService.getNoteList().subscribe(
-      notes => this.notes = notes,
+      notes => {
+        this.notes = notes
+      },
       error => console.log(error));
   }
 

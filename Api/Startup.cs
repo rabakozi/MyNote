@@ -1,6 +1,8 @@
 ﻿using System.Web.Http;
 using Owin;
+using Microsoft.Owin;
 
+[assembly: OwinStartup(typeof(MyNote.Api.Startup))]
 namespace MyNote.Api
 {
     public class Startup
@@ -20,6 +22,7 @@ namespace MyNote.Api
 
             appBuilder.UseAutofacMiddleware(container);
             appBuilder.UseAutofacWebApi(config);
+            appBuilder.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             appBuilder.UseWebApi(config);
         }
     }

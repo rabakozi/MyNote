@@ -18,7 +18,7 @@ export class NoteListItemComponent implements OnInit {
 
   deleteNote()
   {
-    //this.noteService.deleteNote(this.note.id);
+    this.noteService.deleteNote(this.note.id);
     this.noteService.emitChange({ id: this.note.id, action: "delete" });
   }
 

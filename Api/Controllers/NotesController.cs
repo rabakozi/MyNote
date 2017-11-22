@@ -22,12 +22,19 @@ namespace MyNote.Api.Controllers
             this.notesRepository = notesRepository;
         }
 
+        [HttpGet]
+        public Task<IEnumerable<NoteDigest>> GetAll()
+        {
+            return notesRepository.GetAllNoteDigestByUserId(1);
+        }
+
         /// <summary>
         /// Gets a Note by Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Note</returns>
         [Route("{id}")]
+        [HttpGet]
         public Task<Note> Get(int id)
         {
             return notesRepository.Get(id);
