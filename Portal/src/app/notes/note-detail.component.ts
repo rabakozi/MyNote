@@ -45,21 +45,38 @@ export class NoteDetailComponent implements OnInit {
       this.noteService.updateNote(this.note);
       this.noteUpdated();
     } else {
-      this.note = this.noteService.addNote(this.note);
-      this.isNew = false;
-      this.noteAdded();
+
+      this.noteService.createNote(this.note)
+        .subscribe(respose => {
+          this.isNew = false;
+          this.noteCreated();
+        });
     }
   }
 
+  //createNote() {
+  //  this.noteService.createNote(this.note)
+  //    .subscribe(response => {
+  //      this.noteCreated();
+  //    });
+  //}
+
   deleteNote() {
-    this.noteDeleted();
+    this.noteService.deleteNote(this.note.id)
+      .subscribe(response => {
+        this.noteDeleted();
+      });
   }
+
+
+
+
 
   private noteDeleted() {
     this.noteService.emitChange({ id: this.note.id, action: 'delete' });
   }
 
-  private noteAdded() {
+  private noteCreated() {
     this.noteService.emitChange({ id: this.note.id, action: 'add' });
   }
 

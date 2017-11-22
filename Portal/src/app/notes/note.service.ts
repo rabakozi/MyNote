@@ -22,45 +22,30 @@ export class NoteService {
 
   // end of event handling part
 
-  private baseUrl = 'localhost:9000/';
+  private url = 'localhost:9000/api/notes';
   
   constructor(private http: HttpClient) { }
 
   getNoteList(): Observable<INote[]> {
-    return this.http.get<INote[]>(this.baseUrl + 'api/notes')
-      .do(data => console.log(JSON.stringify(data)))
-      .catch((error: Response) => { return Observable.throw(null)});
-  }
+    return this.http.get<INote[]>(this.url);
+  };
+
 
   getNote(id: number): Observable<INote> {
-    let url = this.baseUrl + 'api/notes/' + id;
-    return this.http.get<INote>(url)
-      .do(data => console.log(JSON.stringify(data)));
-    //   .catch(s => console.log('Error!: '));
+    return this.http.get<INote>(this.url + '/' + id);
   }
 
   updateNote(note: INote): Observable<INote> {
-    let url = this.baseUrl + 'api/notes/' + note.id;
     let body = JSON.stringify(note);
-    return this.http
-      .put(url, body, this.options)
-      .map(this.extractData)
-      .catch(this.handleError);
-
-
-    //let i = this.notes.findIndex(n => n.id == note.id);
-    //this.notes[i] = Object.assign({}, note);
+    return this.http.put(this.url, body);
   }
 
-  createNote(note: INote): INote {
-    const lastNote = this.notes.reduce((prev, current) => (prev.id > current.id) ? prev : current);
-    note.id = lastNote.id+1;
-    this.notes.push(Object.assign({}, note));
-    return note;
+  createNote(note: INote): Observable<INote> {
+    let body = JSON.stringify(note);
+    return this.http.post<INote>(this.url + '/' + note.id, body);
   }
 
   deleteNote(id: number) {
-    let i = this.notes.findIndex(n => n.id == id);
-    this.notes.splice(i, 1);
+    return this.http.delete<INote>(this.url + '/' + id);
   }
 }
