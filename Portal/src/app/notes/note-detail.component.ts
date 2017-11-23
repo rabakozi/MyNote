@@ -28,7 +28,17 @@ export class NoteDetailComponent implements OnInit {
     });
   }
 
-  onChange() {
+  onTitleChange(title: HTMLTextAreaElement) {
+    this.note.title = title.value;
+    if (!this.isNew) {
+      this.updateNote();
+    } else {
+      this.createNote();
+    }
+  }
+
+  onContentChange(content: HTMLTextAreaElement) {
+    this.note.content = content.value;
     if (!this.isNew) {
       this.updateNote();
     } else {

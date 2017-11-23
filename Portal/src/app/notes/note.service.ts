@@ -40,7 +40,7 @@ export class NoteService {
 
   updateNote(note: INote): Observable<INote> {
     let body = JSON.stringify(note);
-    return this.http.put(this.url, body, { headers: this.headers }).
+    return this.http.put(this.url + '/' + note.id, body, { headers: this.headers }).
       do(() => {
         this.emitChange({ action: 'update', subject: note });
       });
