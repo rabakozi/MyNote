@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
-namespace ContosoUniversity.DAL
+namespace MyNote.DAL
 {
     public class DatabaseContext : DbContext
     {
