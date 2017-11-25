@@ -1,13 +1,14 @@
 ﻿using Autofac;
+using MyNote.Api.Repositories;
 
-namespace MyNote.Repositories
+namespace MyNote.Api
 {
     public class AutofacModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
             builder
-                .RegisterType<StubNotesRepository>()
+                .RegisterType<NotesRepository>()
                 .As<INotesRepository>()
                 .SingleInstance();
             //builder

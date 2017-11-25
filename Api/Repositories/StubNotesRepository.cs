@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MyNote.Model;
+using MyNote.Api.Model;
 
-namespace MyNote.Repositories
+namespace MyNote.Api.Repositories
 {
     public class StubNotesRepository : INotesRepository
     {

@@ -15,7 +15,7 @@ namespace MyNote.Api
             //var logger = new Logger(new SelfLogger());
             //builder.RegisterInstance(logger).As<ILogger>().SingleInstance();
 
-            builder.RegisterModule(new Repositories.AutofacModule());
+            builder.RegisterModule(new Api.AutofacModule());
 
             var container = builder.Build();
 

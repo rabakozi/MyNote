@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using MyNote.Api.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using MyNote.Model;
 
-namespace MyNote.Repositories
+namespace MyNote.Api.Repositories
 {
     public interface INotesRepository
     {

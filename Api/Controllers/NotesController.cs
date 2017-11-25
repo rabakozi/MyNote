@@ -1,11 +1,11 @@
-﻿using System;
+﻿using MyNote.Api.Model;
+using MyNote.Api.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
-using MyNote.Model;
-using MyNote.Repositories;
 
 namespace MyNote.Api.Controllers
 {
@@ -23,9 +23,9 @@ namespace MyNote.Api.Controllers
         }
 
         [HttpGet]
-        public Task<IEnumerable<NoteDigest>> GetAll()
+        public async Task<IEnumerable<NoteDigest>> GetAll()
         {
-            return notesRepository.GetAllNoteDigestByUserId(1);
+            return await notesRepository.GetAllNoteDigestByUserId(1);
         }
 
         /// <summary>
@@ -35,18 +35,19 @@ namespace MyNote.Api.Controllers
         /// <returns>Note</returns>
         [Route("{id}")]
         [HttpGet]
-        public Task<Note> Get(int id)
+        public async Task<Note> Get(int id)
         {
-            return notesRepository.Get(id);
+            var note = await notesRepository.Get(id);
+            return note; //notesRepository.Get(id);
         }
 
         /// <summary>
         /// Creates a new Note
         /// </summary>
         [HttpPost]
-        public Task Post([FromBody]Note note)
+        public async Task Post([FromBody]Note note)
         {
-            return notesRepository.Insert(note);
+            await notesRepository.Insert(note);
         }
 
         /// <summary>
@@ -54,10 +55,10 @@ namespace MyNote.Api.Controllers
         /// </summary>
         [Route("{id}")]
         [HttpPut]
-        public Task Put(int id, [FromBody]Note note)
+        public async Task Put(int id, [FromBody]Note note)
         {
             note.Id = id;
-            return notesRepository.Update(note);
+            await notesRepository.Update(note);
         }
 
         /// <summary>
@@ -65,9 +66,9 @@ namespace MyNote.Api.Controllers
         /// </summary>
         [Route("{id}")]
         [HttpDelete]
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            return notesRepository.Delete(id);
+            await notesRepository.Delete(id);
         }
 
         ///// <summary>
@@ -76,9 +77,9 @@ namespace MyNote.Api.Controllers
         ///// <returns>IEnumerable&lt;Note&gt;</returns>
         //[Route("{userId}")]
         //[HttpGet]
-        public Task<IEnumerable<NoteDigest>> GetByUserId(int userId)
-        {
-            return notesRepository.GetAllNoteDigestByUserId(userId);
-        }
+        //public async Task<IEnumerable<NoteDigest>> GetByUserId(int userId)
+        //{
+        //    return await notesRepository.GetAllNoteDigestByUserId(userId);
+        //}
     }
 }

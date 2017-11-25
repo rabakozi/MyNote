@@ -1,4 +1,4 @@
-﻿namespace MyNote.Model
+﻿namespace MyNote.Api.Model
 {
     public class Note : NoteDigest
     {
