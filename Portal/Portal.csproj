@@ -196,10 +196,6 @@
     <Content Include="src\app\notes\note-list-item.component.html" />
     <Content Include="src\app\notes\note.component.css" />
     <Content Include="src\app\notes\note.component.html" />
-    <Content Include="src\app\services\authInterceptorService.js" />
-    <Content Include="src\app\services\authService.js" />
-    <Content Include="src\app\services\ordersService.js" />
-    <Content Include="src\app\services\tokensManagerService.js" />
     <Content Include="src\favicon.ico" />
     <Content Include="src\index.html" />
     <Content Include="src\styles.css" />
