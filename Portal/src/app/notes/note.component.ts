@@ -1,20 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 import { INote } from "./note";
 import { NoteService } from "./note.service"
 
 
 @Component({
-  selector: 'app-note-list',
-  templateUrl: './note-list.component.html',
-  styleUrls: ['./note-list.component.css'],
+  selector: 'app-note',
+  templateUrl: './note.component.html',
+  styleUrls: ['./note.component.css'],
   providers: [NoteService]
 })
-export class NoteListComponent implements OnInit {
+export class NoteComponent implements OnInit {
 
   notes: INote[] = [];
+  noteId = '';
 
-  constructor(private noteService: NoteService, private router: Router) {
+  constructor(
+    private noteService: NoteService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+
     noteService.changeEmitted$.subscribe(
       evt => {
         let note = evt.subject as INote;
@@ -22,12 +29,15 @@ export class NoteListComponent implements OnInit {
         switch (evt.action)
         {
           case 'delete':
+            console.log('delete');
             this.notes.splice(index, 1);
             break;
           case 'create':
+            console.log('create');
             this.notes.splice(0, 0, note);
             break;
           case 'update':
+            console.log('update');
             this.notes[index] = note;
             break;
         }

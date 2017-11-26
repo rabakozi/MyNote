@@ -1,13 +1,15 @@
-<div>
-  <a class="btn btn-link btn-sm" style="padding-right: 0" (click)="shareNote">
-    <i class="fa fa-share-square fa-2x" aria-hidden="true"></i>
-  </a>
-  <a class="btn btn-link btn-sm" style="padding-left: 0" (click)="deleteNote()">
-    <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
-  </a>
-</div>
-<div class="form-group">
-  <textarea class="form-control mb-1" [ngModel]="note.title" (change)="onTitleChange(title)" #title rows="1"></textarea>
-  <textarea class="form-control" [ngModel]="note.content" (change)="onContentChange(content)" #content style="overflow: hidden;" rows="10"></textarea>
+<div *ngIf="this.note">
+  <div>
+    <a class="btn btn-link btn-sm" style="padding-right: 0" (click)="shareNote">
+      <i class="fa fa-share-square fa-2x" aria-hidden="true"></i>
+    </a>
+    <a class="btn btn-link btn-sm" style="padding-left: 0" (click)="deleteNote()">
+      <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+    </a>
+  </div>
+  <div class="form-group">
+    <textarea class="form-control mb-1" [ngModel]="note.title" (change)="onTitleChange(title)" #title rows="1"></textarea>
+    <textarea class="form-control" [ngModel]="note.content" (change)="onContentChange(content)" #content style="overflow: hidden;" rows="10"></textarea>
+  </div>
 </div>
 

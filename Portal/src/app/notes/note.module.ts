@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms'
 
 import { NoteDetailComponent } from './note-detail.component';
-import { NoteListComponent } from './note-list.component';
+import { NoteComponent } from './note.component';
 import { NoteListItemComponent } from './note-list-item.component';
 
 @NgModule({
@@ -12,10 +12,11 @@ import { NoteListItemComponent } from './note-list-item.component';
     CommonModule,
     FormsModule,
     RouterModule.forChild([
-      { path: 'notes/:id', component: NoteDetailComponent }
+      { path: 'notes', component: NoteComponent },
+      { path: 'notes/:id', component: NoteComponent }
     ])
   ],
-  declarations: [NoteDetailComponent, NoteListComponent, NoteListItemComponent],
-  exports: [NoteListComponent]
+  declarations: [NoteDetailComponent, NoteComponent, NoteListItemComponent],
+  exports: [NoteComponent]
 })
 export class NoteModule { }

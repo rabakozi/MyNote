@@ -40,7 +40,7 @@ namespace MyNote.Api.Repositories
                 note.Created = note.Modified = DateTime.Now;
                 //TODO: return Id
                 //ctx.Notes.Add(note);
-                ((DbSet<Note>)ctx.Set<Note>())
+                var zzz = ((DbSet<Note>)ctx.Set<Note>())
                     .Add(note);
 
                 await ctx.SaveChangesAsync();

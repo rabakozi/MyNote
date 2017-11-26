@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { INote } from "./note";
 import { NoteService } from "./note.service"
@@ -17,6 +17,10 @@ export class NoteDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+      if (!params['id']) {
+        return;
+      }
+      console.log(params['id']);
       let id = params['id'];
       if (id === 'new') {
         this.isNew = true;
@@ -63,20 +67,21 @@ export class NoteDetailComponent implements OnInit {
     this.noteService.createNote(this.note)
       .subscribe(response => {
         this.isNew = false;
-        this.noteService.emitChange({ action: 'create', subject: this.note });
+        this.noteService.emitChange({ action: 'create', subject: response });
       });
   }
 
   updateNote() {
     this.noteService.updateNote(this.note)
       .subscribe(response => {
-        this.noteService.emitChange({ action: 'update', subject: this.note });
+        this.noteService.emitChange({ action: 'update', subject: response });
       });
   }
 
   deleteNote() {
     this.noteService.deleteNote(this.note.id)
-      .subscribe(response => {
+      .subscribe(() => {
+        debugger;
         this.noteService.emitChange({ action: 'delete', subject: this.note });
       });
   }

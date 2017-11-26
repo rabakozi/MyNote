@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
+import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 import { HttpHeaders } from "@angular/common/http";
 
 @Injectable()
@@ -40,10 +42,7 @@ export class NoteService {
 
   updateNote(note: INote): Observable<INote> {
     let body = JSON.stringify(note);
-    return this.http.put(this.url + '/' + note.id, body, { headers: this.headers }).
-      do(() => {
-        this.emitChange({ action: 'update', subject: note });
-      });
+    return this.http.put<INote>(this.url + '/' + note.id, body, { headers: this.headers });
   }
 
   createNote(note: INote): Observable<INote> {
@@ -51,7 +50,7 @@ export class NoteService {
     return this.http.post<INote>(this.url, body, { headers: this.headers });
   }
 
-  deleteNote(id: number) {
-    return this.http.delete<INote>(this.url + '/' + id);
+  deleteNote(id: number): Observable<any> {
+    return this.http.delete(this.url + '/' + id);
   }
 }
