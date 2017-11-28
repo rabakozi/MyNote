@@ -5,7 +5,6 @@ import { AuthService } from "../auth/auth.service";
 @Component({
   templateUrl: './login.component.html'
 })
-
 export class LoginComponent {
 
   public title: string = 'Login';
@@ -18,8 +17,8 @@ export class LoginComponent {
   }
 
   loginData = {
-    userName: "",
-    password: "",
+    userName: "string",
+    password: "string12",
     useRefreshTokens: false
   };
 
@@ -27,11 +26,10 @@ export class LoginComponent {
 
   login() {
 
-    this.authService.login(this.loginData).then(function (response) {
-
+    this.authService.login(this.loginData).subscribe(response => {
       this.router.navigate(['/notes']);
     },
-      function (err) {
+      err => {
         this.message = err.error_description;
       });
   };

@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
     this.passwordConfirmation = "microsoft";
   }
 
-  public registerUser($event): void {
+  registerUser($event): void {
 
     //let user: User = new User();
     //user.emailAddress = this.emailAddress;
@@ -52,11 +52,16 @@ export class RegisterComponent implements OnInit {
     //user.passwordConfirmation = this.passwordConfirmation;
 
     //this.clearInputErrors();
-
-    //this.userService.registerUser(user)
-    //  .subscribe(
-    //  response => this.registerUserOnSuccess(response),
-    //  response => this.registerUserOnError(response));
+    let user = {
+      userName: "mikorka",
+      password: "kalman",
+      confirmPassword: "kalman"
+    };
+    debugger;
+    this.authService.saveRegistration(user);
+      //.subscribe(
+      //response => this.registerUserOnSuccess(response),
+      //response => this.registerUserOnError(response));
 
   }
 

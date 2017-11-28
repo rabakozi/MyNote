@@ -12,18 +12,15 @@ export class AuthService {
 
   constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }
 
-  private serviceBase = 'http://localhost:9000'
+  private serviceBase = 'http://localhost:9000';
 
   private ngAuthSettings = {
     apiServiceBaseUri: this.serviceBase,
     clientId: 'ngAuthApp'
   };
 
-  authentication = {
-    isAuth: false,
-    userName: "",
-    useRefreshTokens: false
-  };
+  private authentication: IAuthentication;
+  private authSubject = new Subject<IAuthentication>();
 
   externalAuthData = {
     provider: "",
@@ -33,51 +30,31 @@ export class AuthService {
 
   saveRegistration(registration): any {
     this.logout();
-
-    return this.http.post(this.serviceBase + 'api/account/register', registration);
-  };
+    let body = JSON.stringify(registration);
+    this.http.post(this.serviceBase + '/api/account/register', body, { headers: new HttpHeaders().set('Content-Type', 'application/json') }).subscribe(() => {
+      // TODO:
+    });
+  }
 
   login(loginData): any {
-
     let data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
 
     if (loginData.useRefreshTokens) {
       data = data + "&client_id=" + this.ngAuthSettings.clientId;
     }
 
-    return this.http.post(this.serviceBase + 'token', data, { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') }).
-      subscribe((response: any) => {
-        if (loginData.useRefreshTokens) {
-          this.localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName, refreshToken: response.refresh_token, useRefreshTokens: true });
-        }
-        else {
-          this.localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName, refreshToken: "", useRefreshTokens: false });
-        }
-        this.authentication.isAuth = true;
-        this.authentication.userName = loginData.userName;
-        this.authentication.useRefreshTokens = loginData.useRefreshTokens;
+    let obs = this.http.post(this.serviceBase + '/token', data, { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') });
+
+    obs.subscribe((response: any) => {
+        debugger;
+        this.setAuthData(true, response.userName, response.useRefreshTokens, response.refreshToken, response.refreshToken);
       },
       (error) => {
         this.logout();
       });
-  };
 
-  logout(): any {
-    this.localStorageService.remove('authorizationData');
-
-    this.authentication.isAuth = false;
-    this.authentication.userName = "";
-    this.authentication.useRefreshTokens = false;
-  };
-
-  fillAuthData(): any {
-    let authData: any = this.localStorageService.get('authorizationData');
-    if (authData) {
-      this.authentication.isAuth = true;
-      this.authentication.userName = authData.userName;
-      this.authentication.useRefreshTokens = authData.useRefreshTokens;
-    }
-  };
+    return obs;
+  }
 
   refreshToken(): any {
     let authData: any = this.localStorageService.get('authorizationData');
@@ -88,46 +65,90 @@ export class AuthService {
 
         var data = "grant_type=refresh_token&refresh_token=" + authData.refreshToken + "&client_id=" + this.ngAuthSettings.clientId;
 
-        this.localStorageService.remove('authorizationData');
+        this.removeAuthData();
 
-        return this.http.post(this.serviceBase + 'token', data, { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') }).
+        let obs = this.http.post(this.serviceBase + '/token', data, { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') }).
           subscribe((response: any) => {
-            this.localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, refreshToken: response.refresh_token, useRefreshTokens: true });
+              this.setAuthData(true, response.userName, response.useRefreshTokens, response.refreshToken, response.refreshToken);
           },
           (error) => {
             this.logout();
           });
+
+        return obs;
       }
     }
-  };
+  }
 
-  obtainAccessToken(externalData): any {
+  logout(): any {
+    this.localStorageService.remove('authorizationData');
 
-    return this.http.post(this.serviceBase + 'api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).
-      subscribe((response: any) => {
-        this.localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, refreshToken: "", useRefreshTokens: false });
+    this.notify();
+  }
 
-        this.authentication.isAuth = true;
-        this.authentication.userName = response.userName;
-        this.authentication.useRefreshTokens = false;
-      },
-      (error) => {
-        this.logout();
+  //obtainAccessToken(externalData): any {
+  //  return this.http.post(this.serviceBase + '/api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).
+  //    subscribe((response: any) => {
+  //        this.setAuthData(true, response.userName, response.useRefreshTokens, response.refreshToken, response.refreshToken);
+  //    },
+  //    (error) => {
+  //      this.logout();
+  //    });
+  //}
+
+  //registerExternal(registerExternalData): any {
+  //  return this.http.post(this.serviceBase + '/api/account/registerexternal', registerExternalData).
+  //    subscribe((response: any) => {
+  //      this.setAuthData(true, response.userName, response.useRefreshTokens, response.refreshToken, response.refreshToken);
+  //    },
+  //    (error) => {
+  //      this.logout();
+  //    });
+  //}
+
+  private notify() {
+    let storedAuthData: IAuthentication = this.localStorageService.get('authorizationData') as IAuthentication;
+    let authData: IAuthentication;
+
+    if (storedAuthData) {
+      authData = (Object.assign({}, storedAuthData));
+    } else {
+      authData = { isAuthenticated: false };
+    }
+
+    this.authSubject.next(Object.assign({}, authData));
+  }
+
+  getAuthentication(): Observable<IAuthentication> {
+    return this.authSubject.asObservable();
+  }
+
+  private setAuthData(isAuthenticated: boolean, userName: string, useRefreshTokens: boolean, token: string, refreshToken: string) {
+    this.localStorageService.set('authorizationData',
+      {
+        isAuthenticated: isAuthenticated,
+        token: token,
+        userName: userName,
+        refreshToken: refreshToken,
+        useRefreshTokens: useRefreshTokens
       });
-  };
 
-  registerExternal(registerExternalData): any {
+    this.notify();
+  }
 
-    return this.http.post(this.serviceBase + 'api/account/registerexternal', registerExternalData).
-      subscribe((response: any) => {
-        this.localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, refreshToken: "", useRefreshTokens: false });
+  private removeAuthData() {
+    this.localStorageService.remove('authorizationData');
 
-        this.authentication.isAuth = true;
-        this.authentication.userName = response.userName;
-        this.authentication.useRefreshTokens = false;
-      },
-      (error) => {
-        this.logout();
-      });
-  };
+    this.notify();
+  }
+   
 }
+
+export interface IAuthentication {
+  isAuthenticated: boolean;
+  userName?: string;
+  useRefreshTokens?: boolean;
+  token?: string,
+  refreshToken?: string;
+}
+

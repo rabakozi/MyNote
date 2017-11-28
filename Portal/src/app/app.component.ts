@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Input, ElementRef, ApplicationRef } from '@angular/core';
-import { AuthService } from './auth/auth.service';
+import { AuthService, IAuthentication } from './auth/auth.service';
 //import { User } from './entities/user.entity';
 //import { UserService } from './services/user.service';
 //import { CustomerService } from './services/customer.service';
@@ -8,6 +8,8 @@ import { AuthService } from './auth/auth.service';
 //import { AlertService } from './services/alert.service';
 import { Router } from '@angular/router';
 import { environment } from '../environments/environment';
+import Localstorageservice = require("./auth/local-storage.service");
+import LocalStorageService = Localstorageservice.LocalStorageService;
 
 @Component({
   selector: 'app-root',
@@ -30,13 +32,16 @@ export class AppComponent implements OnInit {
   public webApiEndPoint: string;
   public imagesDirectory: string;
 
+  public authenticationData: IAuthentication;
+
   constructor(
 
     private authService: AuthService,
     //private userService: UserService,
     //private blockUIService: BlockUIService,
     private router: Router,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private localStorageService: LocalStorageService
   ) {
 
     let native = this.elementRef.nativeElement;
@@ -68,7 +73,10 @@ export class AppComponent implements OnInit {
     //  response => this.authenicateOnSuccess(response),
     //  response => this.authenicateOnError(response));
 
-
+    this.authService.getAuthentication().subscribe((response: IAuthentication) => {
+      debugger;
+      this.authenticationData = response;
+    });
   }
 
   private blockUnBlockUI(event) {
@@ -129,19 +137,19 @@ export class AppComponent implements OnInit {
 
   }
 
-  public logout() {
+  logout() {
 
     //this.firstName = "";
     //this.lastName = "";
     //this.isAuthenicated = false;
     //this.sessionService.logout();
 
-    if (typeof (Storage) !== "undefined") {
-      localStorage.setItem("CodeProject.Angular4.Token", "");
-    }
+    //if (typeof (Storage) !== "undefined") {
+    //  localStorage.setItem("CodeProject.Angular4.Token", "");
+    //}
 
-    this.router.navigate(['/home/home']);
-
+    //this.router.navigate(['/home/home']);
+    this.authService.logout();
   }
 
 
