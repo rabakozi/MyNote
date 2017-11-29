@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/share';
 import { HttpHeaders } from "@angular/common/http";
 import { LocalStorageService } from "./local-storage.service";
 
@@ -31,9 +32,13 @@ export class AuthService {
   saveRegistration(registration): any {
     this.logout();
     let body = JSON.stringify(registration);
-    this.http.post(this.serviceBase + '/api/account/register', body, { headers: new HttpHeaders().set('Content-Type', 'application/json') }).subscribe(() => {
-      // TODO:
-    });
+    let obs = this.http.post(this.serviceBase + '/api/account/register', body, { headers: new HttpHeaders().set('Content-Type', 'application/json') }).share();
+    obs.subscribe(() => {
+      debugger;
+    }, error => {
+      debugger;});
+
+    return obs;
   }
 
   login(loginData): any {
@@ -147,7 +152,14 @@ export interface IAuthentication {
   isAuthenticated: boolean;
   userName?: string;
   useRefreshTokens?: boolean;
-  token?: string,
+  token?: string;
   refreshToken?: string;
 }
+
+export interface IUser {
+  userName: string;
+  password: string;
+  confirmPassword: boolean;
+}
+
 

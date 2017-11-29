@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from "../auth/auth.service";
+import { AuthService, IUser } from "../auth/auth.service";
 
 @Component({
   templateUrl: './login.component.html'
@@ -8,25 +8,21 @@ import { AuthService } from "../auth/auth.service";
 export class LoginComponent {
 
   public title: string = 'Login';
-  public userName: string = "";
-  public password: string = "";
-  public messageBox: string;
-  public alerts: Array<string> = [];
+  userName: string;
+  password: string;
+  useRefreshTokens: boolean;
+  message: string;
 
   constructor(private authService: AuthService, private router: Router) {
   }
 
-  loginData = {
-    userName: "string",
-    password: "string12",
-    useRefreshTokens: false
-  };
-
-  message = "";
-
   login() {
 
-    this.authService.login(this.loginData).subscribe(response => {
+    this.authService.login({
+      userName: this.userName,
+      password: this.password,
+      useRefreshTokens: this.useRefreshTokens
+    }).subscribe(response => {
       this.router.navigate(['/notes']);
     },
       err => {

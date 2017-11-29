@@ -13,6 +13,7 @@ namespace MyNote.Api.Controllers
     /// <summary>
     /// This controller implements Notes CRUD functionalities
     /// </summary>
+    [Authorize]
     [RoutePrefix("api/notes")]
     public class NotesController : ApiController
     {
