@@ -74,7 +74,6 @@ export class AppComponent implements OnInit {
     //  response => this.authenicateOnError(response));
 
     this.authService.getAuthentication().subscribe((response: IAuthentication) => {
-      debugger;
       this.authenticationData = response;
     });
   }

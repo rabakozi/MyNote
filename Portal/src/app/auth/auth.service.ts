@@ -46,8 +46,7 @@ export class AuthService {
     let obs = this.http.post(this.serviceBase + '/token', data, { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') });
 
     obs.subscribe((response: any) => {
-        debugger;
-        this.setAuthData(true, response.userName, response.useRefreshTokens, response.refreshToken, response.refreshToken);
+      this.setAuthData(true, response.userName, loginData.useRefreshTokens, response.access_token, response.refresh_token);
       },
       (error) => {
         this.logout();
@@ -69,7 +68,7 @@ export class AuthService {
 
         let obs = this.http.post(this.serviceBase + '/token', data, { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') }).
           subscribe((response: any) => {
-              this.setAuthData(true, response.userName, response.useRefreshTokens, response.refreshToken, response.refreshToken);
+              this.setAuthData(true, response.userName, true, response.access_token, response.refresh_token);
           },
           (error) => {
             this.logout();
@@ -86,25 +85,25 @@ export class AuthService {
     this.notify();
   }
 
-  //obtainAccessToken(externalData): any {
-  //  return this.http.post(this.serviceBase + '/api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).
-  //    subscribe((response: any) => {
-  //        this.setAuthData(true, response.userName, response.useRefreshTokens, response.refreshToken, response.refreshToken);
-  //    },
-  //    (error) => {
-  //      this.logout();
-  //    });
-  //}
+  obtainAccessToken(externalData): any {
+    return this.http.post(this.serviceBase + '/api/account/ObtainLocalAccessToken', { params: { provider: externalData.provider, externalAccessToken: externalData.externalAccessToken } }).
+      subscribe((response: any) => {
+          this.setAuthData(true, response.userName, false, response.access_token, response.refresh_token);
+      },
+      (error) => {
+        this.logout();
+      });
+  }
 
-  //registerExternal(registerExternalData): any {
-  //  return this.http.post(this.serviceBase + '/api/account/registerexternal', registerExternalData).
-  //    subscribe((response: any) => {
-  //      this.setAuthData(true, response.userName, response.useRefreshTokens, response.refreshToken, response.refreshToken);
-  //    },
-  //    (error) => {
-  //      this.logout();
-  //    });
-  //}
+  registerExternal(registerExternalData): any {
+    return this.http.post(this.serviceBase + '/api/account/registerexternal', registerExternalData).
+      subscribe((response: any) => {
+          this.setAuthData(true, response.userName, false, response.access_token, response.refresh_token);
+      },
+      (error) => {
+        this.logout();
+      });
+  }
 
   private notify() {
     let storedAuthData: IAuthentication = this.localStorageService.get('authorizationData') as IAuthentication;

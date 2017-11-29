@@ -9,20 +9,20 @@
     </li>
   </ul>
 
-  <ul class="nav navbar-nav" [hidden]="!isAuthenicated">
+  <ul class="nav navbar-nav" [hidden]="!authenticationData?.isAuthenticated">
     <li><a [routerLink]="['/products/product-maintenance']" class="nav-link" href="#">Product Maintenance</a></li>
     <li><a [routerLink]="['/products/product-inquiry']" class="nav-link" href="#">Product Inquiry</a></li>
     <li><a [routerLink]="['/customers/customer-maintenance']">Customer Maintenance</a></li>
     <li><a [routerLink]="['/customers/customer-inquiry']">Customer Inquiry</a></li>
   </ul>
 
-  <ul class="nav navbar-nav navbar-right" [hidden]="authorizationData">
+  <ul class="nav navbar-nav navbar-right" [hidden]="authenticationData && authenticationData.isAuthenticated">
     <li><a [routerLink]="['/home/register']">Register</a></li>
     <li><a [routerLink]="['/home/login']">Login</a></li>
   </ul>
 
-  <ul class="nav navbar-nav navbar-right" [hidden]="!authorizationData">
-    <li><a [routerLink]="['/user/user-profile']">{{authorizationData?.userName}}</a></li>
+  <ul class="nav navbar-nav navbar-right" [hidden]="!authenticationData?.isAuthenticated">
+    <li><a [routerLink]="['/user/user-profile']">{{authenticationData?.userName}}</a></li>
     <li><a style="cursor:pointer" (click)="logout()">Logout</a></li>
   </ul>
 
