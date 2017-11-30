@@ -1,42 +1,46 @@
-import { Injectable } from '@angular/core';
+// src/app/auth/token.interceptor.ts
+import { Injectable, Injector } from '@angular/core';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+  HttpResponse,
+  HttpErrorResponse
+} from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+//import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 import { LocalStorageService } from "./local-storage.service";
-import { AuthService } from "./auth.service";
-import { Router } from '@angular/router';
+
 
 @Injectable()
-export class InterceptorService {
+export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(
-    private localStorageService: LocalStorageService,
-    private authService: AuthService,
-    private router: Router) { }
+  auth: AuthService;
 
-  request(config) {
-
-    config.headers = config.headers || {};
-
-    let authData: any = this.localStorageService.get('authorizationData');
-    if (authData) {
-      config.headers.Authorization = 'Bearer ' + authData.token;
-    }
-
-    return config;
+  constructor(private injector: Injector, private localStorageService: LocalStorageService) {
+    this.auth = injector.get(AuthService);
   }
 
-  responseError(rejection) {
-    if (rejection.status === 401) {
-      var authData: any = this.localStorageService.get('authorizationData');
-
-      if (authData) {
-        if (authData.useRefreshTokens) {
-          this.router.navigate(['/refresh']);
-          //return $q.reject(rejection);
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let authData: any = this.localStorageService.get('authorizationData');
+    request = request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${authData.token}`
+      }
+    });
+    return next.handle(request).do((event: HttpEvent<any>) => {
+      if (event instanceof HttpResponse) {
+        // do stuff with response if you want
+      }
+    }, (err: any) => {
+      if (err instanceof HttpErrorResponse) {
+        if (err.status === 401) {
+          // redirect to the login route
+          // or show a modal
         }
       }
-      this.authService.logout();
-      this.router.navigate(['/refresh']);
-    }
-    //return $q.reject(rejection);
+    });
   }
-
 }

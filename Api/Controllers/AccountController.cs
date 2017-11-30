@@ -39,7 +39,8 @@ namespace MyNote.Api.Controllers
                 return errorResult;
             }
 
-            return Ok();
+            // workaround
+            return Ok(1);
         }
 
         protected override void Dispose(bool disposing)

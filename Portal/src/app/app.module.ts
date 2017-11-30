@@ -13,6 +13,8 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './home/login.component';
 import { RegisterComponent } from './home/register.component';
 import { UserProfileComponent } from './home/user-profile.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './auth/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,12 @@ import { UserProfileComponent } from './home/user-profile.component';
     AppRoutingModule,
     AuthModule
   ],
-  providers: [AuthService, LocalStorageService],
+  providers: [AuthService, LocalStorageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -34,7 +34,7 @@ export class AuthService {
     let body = JSON.stringify(registration);
     let obs = this.http.post(this.serviceBase + '/api/account/register', body, { headers: new HttpHeaders().set('Content-Type', 'application/json') }).share();
     obs.subscribe(() => {
-      debugger;
+      //debugger;
     }, error => {
       debugger;});
 
@@ -48,7 +48,7 @@ export class AuthService {
       data = data + "&client_id=" + this.ngAuthSettings.clientId;
     }
 
-    let obs = this.http.post(this.serviceBase + '/token', data, { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') });
+    let obs = this.http.post(this.serviceBase + '/token', data, { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') }).share();
 
     obs.subscribe((response: any) => {
       this.setAuthData(true, response.userName, loginData.useRefreshTokens, response.access_token, response.refresh_token);

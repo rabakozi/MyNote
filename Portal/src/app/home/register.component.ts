@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ContentChild, AfterViewInit, NgZone } fro
 
 import { Router } from '@angular/router';
 import { AuthService, IUser } from "../auth/auth.service";
-import { Observable } from "rxjs/Observable";
+import { Observable } from "rxjs/Rx";
 
 declare var NotificationFx: any;
 
@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   user: IUser;
   title: string = "Register";
   message: string = "";
+  private timer;
 
   constructor(private authService: AuthService, private router: Router, private zone: NgZone) { }
 
@@ -28,17 +29,26 @@ export class RegisterComponent implements OnInit {
     this.authService.saveRegistration(this.user)
       .subscribe(
       response => {
-        debugger;
         //$scope.savedSuccessfully = true;
         this.message = "User has been registered successfully, you will be redicted to login page in 2 seconds.";
-        setTimeout(this.redirectToLogin, 2 * 1000);
+        this.waitAndRedirect();
       },
       error => { });
 
   }
 
-  redirectToLogin() {
-    this.router.navigate(['/login']);
+  private redirectToLogin() {
+    this.router.navigate(['/home/login']);
+  }
+
+  private waitAndRedirect() {
+    if (this.timer) {
+      this.timer.unsubscribe();
+    }
+
+    this.timer = Observable.timer(2 * 1000)
+      .take(1)
+      .subscribe(this.redirectToLogin.bind(this));
   }
 
 }
