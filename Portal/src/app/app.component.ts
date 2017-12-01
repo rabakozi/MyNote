@@ -76,6 +76,8 @@ export class AppComponent implements OnInit {
     this.authService.getAuthentication().subscribe((response: IAuthentication) => {
       this.authenticationData = response;
     });
+
+    this.authService.refreshAuthData();
   }
 
   private blockUnBlockUI(event) {

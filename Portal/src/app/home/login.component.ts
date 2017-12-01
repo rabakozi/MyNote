@@ -17,7 +17,6 @@ export class LoginComponent {
   }
 
   login() {
-
     this.authService.login({
       userName: this.userName,
       password: this.password,
@@ -29,7 +28,7 @@ export class LoginComponent {
         this.message = err.error_description;
       });
   };
-
+  
   authExternalProvider(provider) {
 
     //var redirectUri = location.protocol + '//' + location.host + '/authcomplete.html';

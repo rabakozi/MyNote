@@ -11,7 +11,8 @@ import { LocalStorageService } from "./local-storage.service";
 @Injectable()
 export class AuthService {
 
-  constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }
+  constructor(private http: HttpClient, private localStorageService: LocalStorageService) {
+  }
 
   private serviceBase = 'http://localhost:9000';
 
@@ -35,8 +36,7 @@ export class AuthService {
     let obs = this.http.post(this.serviceBase + '/api/account/register', body, { headers: new HttpHeaders().set('Content-Type', 'application/json') }).share();
     obs.subscribe(() => {
       //debugger;
-    }, error => {
-      debugger;});
+    }, error => {});
 
     return obs;
   }
@@ -87,7 +87,7 @@ export class AuthService {
   logout(): any {
     this.localStorageService.remove('authorizationData');
 
-    this.notify();
+    this.refreshAuthData();
   }
 
   obtainAccessToken(externalData): any {
@@ -110,7 +110,7 @@ export class AuthService {
       });
   }
 
-  private notify() {
+  public refreshAuthData() {
     let storedAuthData: IAuthentication = this.localStorageService.get('authorizationData') as IAuthentication;
     let authData: IAuthentication;
 
@@ -137,13 +137,13 @@ export class AuthService {
         useRefreshTokens: useRefreshTokens
       });
 
-    this.notify();
+    this.refreshAuthData();
   }
 
   private removeAuthData() {
     this.localStorageService.remove('authorizationData');
 
-    this.notify();
+    this.refreshAuthData();
   }
    
 }

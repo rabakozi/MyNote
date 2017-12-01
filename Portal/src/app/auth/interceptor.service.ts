@@ -20,16 +20,18 @@ export class TokenInterceptor implements HttpInterceptor {
   auth: AuthService;
 
   constructor(private injector: Injector, private localStorageService: LocalStorageService) {
-    this.auth = injector.get(AuthService);
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.auth = this.auth || this.injector.get(AuthService);
+
     let authData: any = this.localStorageService.get('authorizationData');
-    request = request.clone({
+    request = request.clone(authData ? {
       setHeaders: {
         Authorization: `Bearer ${authData.token}`
       }
-    });
+    }: {});
+
     return next.handle(request).do((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {
         // do stuff with response if you want

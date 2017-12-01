@@ -1,19 +1,12 @@
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top main-title">
   <a class="navbar-brand" href="#">XNote - The Ultimate Note Taking App</a>
-  <ul class="nav navbar-nav mr-auto">
-    <li class="nav-item">
+  <ul class="nav navbar-nav" [hidden]="!authenticationData?.isAuthenticated">
+    <li>
       <a [routerLink]="['/home/home']" class="nav-link" href="#">Home</a>
     </li>
-    <li class="nav-item">
+    <li>
       <a [routerLink]="['/notes']" class="nav-link" href="#">Notes</a>
     </li>
-  </ul>
-
-  <ul class="nav navbar-nav" [hidden]="!authenticationData?.isAuthenticated">
-    <li><a [routerLink]="['/products/product-maintenance']" class="nav-link" href="#">Product Maintenance</a></li>
-    <li><a [routerLink]="['/products/product-inquiry']" class="nav-link" href="#">Product Inquiry</a></li>
-    <li><a [routerLink]="['/customers/customer-maintenance']">Customer Maintenance</a></li>
-    <li><a [routerLink]="['/customers/customer-inquiry']">Customer Inquiry</a></li>
   </ul>
 
   <ul class="nav navbar-nav navbar-right" [hidden]="authenticationData && authenticationData.isAuthenticated">
@@ -28,11 +21,9 @@
 
 </nav>
 
-
 <div class="container">
   <router-outlet></router-outlet>
 </div>
-
 
 <div *ngIf="blockUI">
   <div class="in modal-backdrop spinner-overlay"></div>
