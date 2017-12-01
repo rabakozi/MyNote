@@ -24,6 +24,14 @@ namespace MyNote.Api.Repositories
             }
         }
 
+        public async Task<Note> GetByAccessLink(string accessLink)
+        {
+            using (var ctx = new MyNoteContext())
+            {
+                return await ctx.Notes.Where(n => n.ShareLink == accessLink).FirstAsync();
+            }
+        }
+
         public async Task<IEnumerable<NoteDigest>> GetAllNoteDigestByUserId(int userId)
         {
             using (var ctx = new MyNoteContext())

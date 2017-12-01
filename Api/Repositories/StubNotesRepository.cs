@@ -88,5 +88,10 @@ namespace MyNote.Api.Repositories
             notes.Remove(note);
             return Task.CompletedTask;
         }
+
+        public Task<Note> GetByAccessLink(string accessLink)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -7,8 +7,8 @@
     <p class="mb-1">{{note.lead}}</p>
   </a>
   <div style="position: absolute; top: 5px; right: 5px">
-    <a class="btn btn-link btn-sm" style="padding-right: 0" (click)="shareNote">
-      <i class="fa fa-share-square fa-2x" aria-hidden="true"></i>
+    <a class="btn btn-link btn-sm" style="padding-right: 0" (click)="shareNote()">
+      <i class="fa fa-2x" [ngClass]="note.shareLink ? 'fa-share-alt-square' : 'fa-share-alt'" aria-hidden="true"></i>
     </a>
     <a class="btn btn-link btn-sm" style="padding-left: 0" (click)="deleteNote()">
       <i class="fa fa-trash fa-2x" aria-hidden="true"></i>

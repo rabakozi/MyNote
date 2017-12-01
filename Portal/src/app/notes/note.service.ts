@@ -53,4 +53,16 @@ export class NoteService {
   deleteNote(id: number): Observable<any> {
     return this.http.delete(this.url + '/' + id);
   }
+
+  getByAccessLink(link: string): Observable<INote> {
+    return this.http.get<INote>(this.url + '/' + link);
+  }
+
+  createAccessLink(noteId: number): Observable<INote> {
+    return this.http.post<INote>(this.url + '/' + noteId + '/share', null, { headers: this.headers });
+  }
+
+  deleteAccessLink(noteId: number): Observable<any> {
+    return this.http.delete(this.url + '/' + noteId + '/share');
+  }
 }

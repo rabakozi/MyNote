@@ -16,6 +16,21 @@ export class NoteListItemComponent implements OnInit {
   ngOnInit() {
   }
 
+  shareNote() {
+    if (!this.note.shareLink) {
+      this.noteService.createAccessLink(this.note.id)
+        .subscribe((response: INote) => {
+          this.note.shareLink = response.shareLink;
+        });
+    } else {
+      this.noteService.deleteAccessLink(this.note.id)
+        .subscribe(() => {
+          this.note.shareLink = null;
+        });
+    }
+
+  }
+
   deleteNote()
   {
     this.noteService.deleteNote(this.note.id);

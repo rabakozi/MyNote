@@ -24,7 +24,7 @@ namespace MyNote.Api.Controllers
             this.notesRepository = notesRepository;
         }
 
-        [HttpGet]
+        [Route("")]
         [ResponseType(typeof(IEnumerable<NoteDigest>))]
         public async Task<IHttpActionResult> GetAll()
         {
@@ -37,8 +37,7 @@ namespace MyNote.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Note</returns>
-        [Route("{id}")]
-        [HttpGet]
+        [Route("api/notes/{id}")]
         [ResponseType(typeof(Note))]
         public async Task<IHttpActionResult> Get(int id)
         {
@@ -53,7 +52,7 @@ namespace MyNote.Api.Controllers
         /// <summary>
         /// Creates a new Note
         /// </summary>
-        [HttpPost]
+        [Route("")]
         [ResponseType(typeof(Note))]
         public async Task<IHttpActionResult> Post([FromBody]Note note)
         {
@@ -65,7 +64,6 @@ namespace MyNote.Api.Controllers
         /// Amends an existing Note
         /// </summary>
         [Route("{id}")]
-        [HttpPut]
         [ResponseType(typeof(Note))]
         public async Task<IHttpActionResult> Put(int id, [FromBody]Note note)
         {
@@ -78,22 +76,80 @@ namespace MyNote.Api.Controllers
         /// Deletes a Note of a given Id
         /// </summary>
         [Route("{id}")]
-        [HttpDelete]
         public async Task<IHttpActionResult> Delete(int id)
         {
             await notesRepository.Delete(id);
             return Ok();
         }
 
-        ///// <summary>
-        ///// Returns a list of Note digest of a user
-        ///// </summary>
-        ///// <returns>IEnumerable&lt;Note&gt;</returns>
-        //[Route("{userId}")]
-        //[HttpGet]
-        //public async Task<IEnumerable<NoteDigest>> GetByUserId(int userId)
-        //{
-        //    return await notesRepository.GetAllNoteDigestByUserId(userId);
-        //}
+        /// <summary>
+        /// Get specific note by read only direct link.
+        /// </summary>
+        /// <param name="accessLink"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [Route("{accessLink}")]
+        [ResponseType(typeof(Note))]
+        public async Task<IHttpActionResult> GetByAccessLink(string accessLink)
+        {
+            Note note = await notesRepository.GetByAccessLink(accessLink);
+            if (note == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(note);
+        }
+
+        /// <summary>
+        /// Create read only direct link to note.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("{id}/share")]
+        [ResponseType(typeof(Note))]
+        [HttpPost]
+        public async Task<IHttpActionResult> CreateAccessLink(int id)
+        {
+            var note = await notesRepository.Get(id);
+            if (note == null)
+            {
+                return NotFound();
+            }
+
+            if (note.ShareLink == null)
+            {
+                note.ShareLink = Guid.NewGuid().ToString("N").ToUpper();
+                note.Modified = DateTime.Now;
+                await notesRepository.Update(note);
+            }
+
+            return Ok(note);
+        }
+
+        /// <summary>
+        ///  Delete note read only direct link.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("{id}/share")]
+        [ResponseType(typeof(Note))]
+        public async Task<IHttpActionResult> DeleteNoteAccessLink(int id)
+        {
+            var note = await notesRepository.Get(id);
+            if (note == null)
+            {
+                return NotFound();
+            }
+
+            if (note.ShareLink != null)
+            {
+                note.ShareLink = null;
+                note.Modified = DateTime.Now;
+                await notesRepository.Update(note);
+            }
+
+            return Ok(note);
+        }
     }
 }
