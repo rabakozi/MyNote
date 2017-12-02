@@ -6,10 +6,14 @@
     </div>
     <p class="mb-1">{{note.lead}}</p>
   </a>
-  <div style="position: absolute; top: 5px; right: 5px">
+  <div style="position: absolute; top: 5px; right: 5px"
+       (mouseenter)="showCopyIcon(note.id)"
+       (mouseleave)="hideCopyIcon(note.id)">
     <a class="btn btn-link btn-sm" style="padding-right: 0" (click)="shareNote()">
       <i class="fa fa-2x" [ngClass]="note.shareLink ? 'fa-share-alt-square' : 'fa-share-alt'" aria-hidden="true"></i>
     </a>
+    <a *ngIf="shareUrl" style="position: absolute; left: 0; top: 30px; cursor: pointer;"
+       ngxClipboard [cbContent]="shareUrl">Copy</a>
     <a class="btn btn-link btn-sm" style="padding-left: 0" (click)="deleteNote()">
       <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
     </a>

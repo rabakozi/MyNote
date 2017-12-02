@@ -15,6 +15,7 @@ import { RegisterComponent } from './home/register.component';
 import { UserProfileComponent } from './home/user-profile.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/interceptor.service';
+import { NoteService } from "./notes/note.service";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { TokenInterceptor } from './auth/interceptor.service';
     AppRoutingModule,
     AuthModule
   ],
-  providers: [AuthService, LocalStorageService,
+  providers: [AuthService, LocalStorageService, NoteService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

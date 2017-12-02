@@ -5,7 +5,10 @@
       </a>
   </div>
   <div class="container-fluid">
-    <div class="row" style="z-index: 1000">
+    <div class="col-md-12" style="padding-left: 215px;">
+      <app-note-detail>detail here</app-note-detail>
+    </div>
+    <div class="row">
       <div class="table-responsive" style="width:200px; position:fixed; height:100%;">
         <div *ngIf="notes && notes.length">
           <div class="list-group" *ngFor="let note of notes">
@@ -13,9 +16,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-12" style="padding-left: 215px;">
-      <app-note-detail>detail here</app-note-detail>
     </div>
   </div>
 </div>

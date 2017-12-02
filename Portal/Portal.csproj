@@ -196,6 +196,8 @@
     <Content Include="src\app\notes\note-list-item.component.html" />
     <Content Include="src\app\notes\note.component.css" />
     <Content Include="src\app\notes\note.component.html" />
+    <Content Include="src\app\notes\shared-note.component.css" />
+    <Content Include="src\app\notes\shared-note.component.html" />
     <Content Include="src\favicon.ico" />
     <Content Include="src\index.html" />
     <Content Include="src\styles.css" />
@@ -267,6 +269,8 @@
     <TypeScriptCompile Include="src\app\notes\note.service.spec.ts" />
     <TypeScriptCompile Include="src\app\notes\note.service.ts" />
     <TypeScriptCompile Include="src\app\notes\note.ts" />
+    <TypeScriptCompile Include="src\app\notes\shared-note.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\notes\shared-note.component.ts" />
     <TypeScriptCompile Include="src\environments\environment.prod.ts" />
     <TypeScriptCompile Include="src\environments\environment.ts" />
     <TypeScriptCompile Include="src\main.ts" />

@@ -37,7 +37,7 @@ namespace MyNote.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Note</returns>
-        [Route("api/notes/{id}")]
+        [Route("{id:int}")]
         [ResponseType(typeof(Note))]
         public async Task<IHttpActionResult> Get(int id)
         {
@@ -63,7 +63,7 @@ namespace MyNote.Api.Controllers
         /// <summary>
         /// Amends an existing Note
         /// </summary>
-        [Route("{id}")]
+        [Route("{id:int}")]
         [ResponseType(typeof(Note))]
         public async Task<IHttpActionResult> Put(int id, [FromBody]Note note)
         {
@@ -75,7 +75,7 @@ namespace MyNote.Api.Controllers
         /// <summary>
         /// Deletes a Note of a given Id
         /// </summary>
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IHttpActionResult> Delete(int id)
         {
             await notesRepository.Delete(id);
@@ -89,6 +89,7 @@ namespace MyNote.Api.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [Route("{accessLink}")]
+        [HttpGet]
         [ResponseType(typeof(Note))]
         public async Task<IHttpActionResult> GetByAccessLink(string accessLink)
         {
@@ -106,7 +107,7 @@ namespace MyNote.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("{id}/share")]
+        [Route("{id:int}/share")]
         [ResponseType(typeof(Note))]
         [HttpPost]
         public async Task<IHttpActionResult> CreateAccessLink(int id)
@@ -132,7 +133,7 @@ namespace MyNote.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("{id}/share")]
+        [Route("{id:int}/share")]
         [ResponseType(typeof(Note))]
         public async Task<IHttpActionResult> DeleteNoteAccessLink(int id)
         {
