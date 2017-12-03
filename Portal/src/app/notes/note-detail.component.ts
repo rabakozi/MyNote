@@ -78,14 +78,6 @@ export class NoteDetailComponent implements OnInit {
       });
   }
 
-  deleteNote() {
-    this.noteService.deleteNote(this.note.id)
-      .subscribe(() => {
-        debugger;
-        this.noteService.emitChange({ action: 'delete', subject: this.note });
-      });
-  }
-
   private getEmptyNote(): INote {
     return {
       id: 0,
@@ -95,6 +87,5 @@ export class NoteDetailComponent implements OnInit {
       content: ''
     }
   }
-
 }
 

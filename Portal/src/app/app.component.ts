@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   public webApiEndPoint: string;
   public imagesDirectory: string;
 
-  public authenticationData: IAuthentication;
+  public authentication: IAuthentication;
 
   constructor(
 
@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
     //  response => this.authenicateOnError(response));
 
     this.authService.getAuthentication().subscribe((response: IAuthentication) => {
-      this.authenticationData = response;
+      this.authentication = response;
     });
 
     this.authService.refreshAuthData();

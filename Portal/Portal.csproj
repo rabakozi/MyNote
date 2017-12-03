@@ -190,6 +190,8 @@
     <Content Include="src\app\home\login.component.html" />
     <Content Include="src\app\home\register.component.css" />
     <Content Include="src\app\home\register.component.html" />
+    <Content Include="src\app\home\user-profile.component.css" />
+    <Content Include="src\app\home\user-profile.component.html" />
     <Content Include="src\app\notes\note-detail.component.css" />
     <Content Include="src\app\notes\note-detail.component.html" />
     <Content Include="src\app\notes\note-list-item.component.css" />
@@ -259,6 +261,8 @@
     <TypeScriptCompile Include="src\app\home\login.component.ts" />
     <TypeScriptCompile Include="src\app\home\register.component.spec.ts" />
     <TypeScriptCompile Include="src\app\home\register.component.ts" />
+    <TypeScriptCompile Include="src\app\home\user-profile.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\home\user-profile.component.ts" />
     <TypeScriptCompile Include="src\app\notes\note-detail.component.spec.ts" />
     <TypeScriptCompile Include="src\app\notes\note-detail.component.ts" />
     <TypeScriptCompile Include="src\app\notes\note-list-item.component.spec.ts" />

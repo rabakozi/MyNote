@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   user: IUser;
   title: string = "Register";
   message: string = "";
+  isError: boolean = false;
   private timer;
 
   constructor(private authService: AuthService, private router: Router, private zone: NgZone) { }
@@ -25,16 +26,25 @@ export class RegisterComponent implements OnInit {
   }
 
   registerUser($event): void {
-    //this.clearInputErrors();
     this.authService.saveRegistration(this.user)
       .subscribe(
       response => {
-        //$scope.savedSuccessfully = true;
         this.message = "User has been registered successfully, you will be redicted to login page in 2 seconds.";
         this.waitAndRedirect();
       },
-      error => { });
+      err => {
+        this.isError = true;
+        this.message = this.getErrors(err.error.modelState);
+      });
 
+  }
+
+  private getErrors(object): string {
+    var output = '';
+    for (var property in object) {
+      output += object[property] + '; ';
+    }
+    return output;
   }
 
   private redirectToLogin() {
@@ -50,6 +60,4 @@ export class RegisterComponent implements OnInit {
       .take(1)
       .subscribe(this.redirectToLogin.bind(this));
   }
-
 }
-

@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { AuthService, IUser } from "../auth/auth.service";
 
 @Component({
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
 
@@ -25,7 +26,7 @@ export class LoginComponent {
       this.router.navigate(['/notes']);
     },
       err => {
-        this.message = err.error_description;
+        this.message = err.error.error_description;
       });
   };
   
