@@ -6,7 +6,6 @@ import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
-import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 import { HttpHeaders } from "@angular/common/http";
 
 @Injectable()

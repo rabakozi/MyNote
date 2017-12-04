@@ -2,13 +2,15 @@
 using MyNote.Api.Model;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using Microsoft.WindowsAzure.ServiceRuntime;
+using Microsoft.WindowsAzure.Storage;
 
 namespace MyNote.Api
 {
     public class MyNoteContext : IdentityDbContext<IdentityUser>
     {
 
-        public MyNoteContext() : base("MyNoteContext")
+        public MyNoteContext() : base(RoleEnvironment.GetConfigurationSettingValue("MyNoteContext"))
         {
         }
 
