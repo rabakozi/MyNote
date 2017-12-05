@@ -7,6 +7,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/share';
 import { HttpHeaders } from "@angular/common/http";
 import { LocalStorageService } from "./local-storage.service";
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class AuthService {
@@ -14,10 +15,10 @@ export class AuthService {
   constructor(private http: HttpClient, private localStorageService: LocalStorageService) {
   }
 
-  private serviceBase = 'http://localhost:9000';
+  private serviceBase = environment.serviceBaseUrl;
 
   private ngAuthSettings = {
-    apiServiceBaseUri: this.serviceBase,
+    serviceBaseUrl: this.serviceBase,
     clientId: 'ngAuthApp'
   };
 

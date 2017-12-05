@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  serviceBaseUrl: 'http://inotewebapiselfhost.cloudapp.net:9000'
 };

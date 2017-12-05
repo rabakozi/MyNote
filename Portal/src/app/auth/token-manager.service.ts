@@ -9,10 +9,10 @@ export class TokenManagerService {
   // TODO:
   private ngAuthSettings: any; // TODO:
 
-  private serviceBase = this.ngAuthSettings.apiServiceBaseUri;
+  private apiEndpoint = this.ngAuthSettings.serviceBaseUrl + '/api/refreshtokens';
 
   getRefreshTokens() {
-    return this.http.get(this.serviceBase + 'api/refreshtokens');
+    return this.http.get(this.apiEndpoint);
     //return $http.get(serviceBase + 'api/refreshtokens').then(function (results) {
     //  return results;
     //});
@@ -20,7 +20,7 @@ export class TokenManagerService {
 
   deleteRefreshTokens(tokenid) {
 
-    return this.http.delete(this.serviceBase + 'api/refreshtokens/?tokenid=' + tokenid);
+    return this.http.delete(this.apiEndpoint + '/?tokenid=' + tokenid);
     //.then(function (results) {
     //  return results;
     //});

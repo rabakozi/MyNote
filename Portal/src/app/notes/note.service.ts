@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import { HttpHeaders } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class NoteService {
@@ -24,44 +25,44 @@ export class NoteService {
 
   // end of event handling part
 
-  private url = 'http://localhost:9000/api/notes';
+  private apiEndpoint = environment.serviceBaseUrl + '/api/notes' ;
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
   //.set('Authorization', 'my-auth-token');
 
   constructor(private http: HttpClient) { }
 
   getNoteList(): Observable<INote[]> {
-    return this.http.get<INote[]>(this.url);
+    return this.http.get<INote[]>(this.apiEndpoint);
   };
 
 
   getNote(id: number): Observable<INote> {
-    return this.http.get<INote>(this.url + '/' + id);
+    return this.http.get<INote>(this.apiEndpoint + '/' + id);
   }
 
   updateNote(note: INote): Observable<INote> {
     let body = JSON.stringify(note);
-    return this.http.put<INote>(this.url + '/' + note.id, body, { headers: this.headers });
+    return this.http.put<INote>(this.apiEndpoint + '/' + note.id, body, { headers: this.headers });
   }
 
   createNote(note: INote): Observable<INote> {
     let body = JSON.stringify(note);
-    return this.http.post<INote>(this.url, body, { headers: this.headers });
+    return this.http.post<INote>(this.apiEndpoint, body, { headers: this.headers });
   }
 
   deleteNote(id: number): Observable<any> {
-    return this.http.delete(this.url + '/' + id);
+    return this.http.delete(this.apiEndpoint + '/' + id);
   }
 
   getByAccessLink(link: string): Observable<INote> {
-    return this.http.get<INote>(this.url + '/' + link);
+    return this.http.get<INote>(this.apiEndpoint + '/' + link);
   }
 
   createAccessLink(noteId: number): Observable<INote> {
-    return this.http.post<INote>(this.url + '/' + noteId + '/share', null, { headers: this.headers });
+    return this.http.post<INote>(this.apiEndpoint + '/' + noteId + '/share', null, { headers: this.headers });
   }
 
   deleteAccessLink(noteId: number): Observable<any> {
-    return this.http.delete(this.url + '/' + noteId + '/share');
+    return this.http.delete(this.apiEndpoint + '/' + noteId + '/share');
   }
 }
