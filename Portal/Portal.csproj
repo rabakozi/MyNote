@@ -342,6 +342,6 @@
     </ItemGroup>
   </Target>
   <Target Name="BeforeBuild">
-    <Exec Command="ng build --environment=production" WorkingDirectory="$(ProjectDir)" />
+    <Exec Command="ng build --environment=prod" WorkingDirectory="$(ProjectDir)" />
   </Target>
 </Project>
