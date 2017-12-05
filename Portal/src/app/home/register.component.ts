@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild, ContentChild, AfterViewInit, NgZone } fro
 
 import { Router } from '@angular/router';
 import { AuthService, IUser } from "../auth/auth.service";
-import { Observable } from "rxjs/Rx";
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/timer';
 
 declare var NotificationFx: any;
 
@@ -57,7 +58,6 @@ export class RegisterComponent implements OnInit {
     }
 
     this.timer = Observable.timer(2 * 1000)
-      .take(1)
       .subscribe(this.redirectToLogin.bind(this));
   }
 }
