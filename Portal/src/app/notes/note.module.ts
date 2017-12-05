@@ -15,9 +15,9 @@ import { SharedNoteComponent } from './shared-note.component';
     FormsModule,
     ClipboardModule,
     RouterModule.forChild([
-      { path: 'notes', component: NoteComponent },
-      { path: 'notes/:id', component: NoteComponent },
-      { path: 'viewnote/:id', component: SharedNoteComponent }
+      { pathMatch: 'full', path: 'notes', component: NoteComponent },
+      { pathMatch: 'full', path: 'notes/:id', component: NoteComponent },
+      { pathMatch: 'full', path: 'viewnote/:id', component: SharedNoteComponent }
     ])
   ],
   declarations: [NoteDetailComponent, NoteComponent, NoteListItemComponent, SharedNoteComponent],
