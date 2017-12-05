@@ -7,8 +7,8 @@
     <p class="mb-1">{{note.lead}}</p>
   </a>
   <div style="position: absolute; top: 5px; right: 5px"
-       (mouseenter)="showCopyIcon(note.id)"
-       (mouseleave)="hideCopyIcon(note.id)">
+       (mouseenter)="showCopyIcon()"
+       (mouseleave)="hideCopyIcon()">
     <a class="btn btn-link btn-sm" style="padding-right: 0;" data-toggle="tooltip" [title]="note.shareLink ? 'Share note' : 'Cancel sharing'" (click)="shareNote()">
       <i class="fa fa-2x" [ngClass]="note.shareLink ? 'fa-share-alt-square' : 'fa-share-alt'" aria-hidden="true"></i>
     </a>

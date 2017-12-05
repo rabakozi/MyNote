@@ -8,15 +8,15 @@
           <div style="padding:10px;margin:10px; ">
             <div class="form-group">
               <label class="control-label">User name</label>
-              <input type="text" class="form-control" [(ngModel)]="user.userName" name="userName" [ngClass]="{'validation-error': firstNameInputError}">
+              <input type="text" class="form-control" [(ngModel)]="user.userName" name="userName">
             </div>
             <div class="form-group">
               <label class="control-label required">Password</label>
-              <input type="password" class="form-control" [(ngModel)]="user.password" name="password" [ngClass]="{'validation-error': passwordInputError}">
+              <input type="password" class="form-control" [(ngModel)]="user.password" name="password">
             </div>
             <div class="form-group">
               <label class="control-label required">Password Confirmation</label>
-              <input type="password" class="form-control" [(ngModel)]="user.confirmPassword" name="confirmPassword" [ngClass]="{'validation-error': passwordConfirmationInputError}">
+              <input type="password" class="form-control" [(ngModel)]="user.confirmPassword" name="confirmPassword">
             </div>
           </div>
         </div>
