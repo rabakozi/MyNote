@@ -208,6 +208,7 @@
     <Content Include="src\app\notes\shared-note.component.html" />
     <Content Include="src\favicon.ico" />
     <Content Include="src\index.html" />
+    <Content Include="src\server\index.js" />
     <Content Include="src\styles.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -227,6 +228,8 @@
     <Content Include="src\tsconfig.spec.json" />
     <Content Include="tsconfig.json" />
     <Content Include="tslint.json" />
+    <Content Include="src\server\package-lock.json" />
+    <Content Include="src\server\package.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
