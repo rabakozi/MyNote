@@ -1,6 +1,5 @@
-namespace MyNote.WebApi.ControllerLess.Mvc
+namespace MyNote.Portal
 {
-  using MyNote.WebApi.ControllerLess.Configuration;
   using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;  

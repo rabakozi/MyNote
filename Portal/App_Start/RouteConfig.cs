@@ -24,24 +24,33 @@ namespace MyNote.Portal
 
 //);
 
-      routes.MapRoute(
-     "Default", // Route name
-     "{controller}/{action}/{id}", // URL with parameters
-     new { controller = "Home", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
-     new string[] { "MyNote.Portal.Controllers" }
-);
+     // routes.MapRoute(
+     //"Default", // Route name
+     //"{controller}/{action}/{id}", // URL with parameters
+     //new { controller = "Home", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
+     //new string[] { "MyNote.Portal.Controllers" }
+     // );
 
-      //routes.Add(new Route(
-      //            "{controller}/{action}/{id}",
-      //            new RouteValueDictionary(new
-      //            {
-      //              controller = "Home",
-      //              action = "Index",
-      //              id = UrlParameter.Optional
-      //            }),
-      //            new ControllerLessRouteHandler()
-      //            )
-      //            );
+     // // Route override to work with Angularjs and HTML5 routing
+     // routes.MapRoute(
+     //   name: "Application1Override",
+     //   url: "{*url}",
+     //   defaults: new { controller = "Home", action = "Index" }
+     // );
+
+
+
+      routes.Add(new Route(
+                  "{controller}/{action}/{id}",
+                  new RouteValueDictionary(new
+                  {
+                    controller = "Home",
+                    action = "Index",
+                    id = UrlParameter.Optional
+                  }),
+                  new ControllerLessRouteHandler()
+                  )
+                  );
     }
   }
 }

@@ -149,8 +149,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\ControllerLessController.cs" />
+    <Compile Include="App_Start\ControllerLessHttpHandler.cs" />
+    <Compile Include="App_Start\ControllerLessRouteHandler.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\RouteConfiguration.cs" />
+    <Compile Include="App_Start\RouteElement.cs" />
+    <Compile Include="App_Start\RouteElementCollection.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">

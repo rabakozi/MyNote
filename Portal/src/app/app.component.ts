@@ -39,8 +39,23 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit() {
+    debugger;
     this.authService.getAuthentication().subscribe((response: IAuthentication) => {
+
       this.authentication = response;
+
+      this.currentRoute = this.router.url;
+
+      if (this.currentRoute == "/" || this.currentRoute == undefined) {
+        this.router.navigate(['/home/home']);
+        return;
+      }
+      else {
+        this.router.navigate([this.currentRoute]);
+      }
+
+    }, (error) => {
+      
     });
 
     this.authService.refreshAuthData();

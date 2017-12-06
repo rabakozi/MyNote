@@ -1,4 +1,4 @@
-namespace MyNote.WebApi.ControllerLess.Configuration
+namespace MyNote.Portal
 {
     using System;
     using System.Configuration;
