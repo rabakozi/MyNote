@@ -8,3 +8,6 @@ Selfhosted WebApi service as an Azure worker role:
 2) Edit the project file of my class library and add this: <RoleType>Worker</RoleType> to the first <PropertyGroup> element.
 3) Service entry point class had to extend RoleEntryPoint
 4) Change Context constructor to use cloud connection instead public MyNoteContext() : base(RoleEnvironment.GetConfigurationSettingValue("MyNoteContext"))
+
+https://medium.com/@WorkloadRancher/step-by-step-building-and-deploying-an-angular-2-cli-project-to-azure-app-services-using-vsts-a0bc2d4fec25
+
