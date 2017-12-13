@@ -7,8 +7,8 @@
     <ProjectGuid>{B4DF3E4A-D8D3-45AA-891E-09249847FABC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ClassLibrary1</RootNamespace>
-    <AssemblyName>ClassLibrary1</AssemblyName>
+    <RootNamespace>Portal</RootNamespace>
+    <AssemblyName>Portal</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -131,12 +131,12 @@
     <Content Include="src\server\index.js" />
     <Content Include="src\styles.css" />
   </ItemGroup>
-  <!--<Target Name="Build">
+  <Target Name="Build">
     <Copy SourceFiles="@(Content)" DestinationFiles="@(Content->'$(OutputPath)%(RelativeDir)%(Filename)%(Extension)')" />
   </Target>
   <Target Name="Clean">
     <Exec Command="rd /s /q $(OutputPath)" Condition="Exists($(OutputPath))" />
   </Target>
   <Target Name="Rebuild" DependsOnTargets="Clean;Build">
-  </Target>-->
+  </Target>
 </Project>
