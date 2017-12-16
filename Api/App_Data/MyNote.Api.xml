@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyNote.Api</name>
+    </assembly>
+    <members>
+        <member name="T:MyNote.Api.Controllers.NotesController">
+            <summary>
+            This controller implements Notes CRUD functionalities
+            </summary>
+        </member>
+        <member name="M:MyNote.Api.Controllers.NotesController.Get(System.Int32)">
+            <summary>
+            Gets a Note by Id
+            </summary>
+            <param name="id"></param>
+            <returns>Note</returns>
+        </member>
+        <member name="M:MyNote.Api.Controllers.NotesController.Post(MyNote.Api.Model.Note)">
+            <summary>
+            Creates a new Note
+            </summary>
+        </member>
+        <member name="M:MyNote.Api.Controllers.NotesController.Put(System.Int32,MyNote.Api.Model.Note)">
+            <summary>
+            Amends an existing Note
+            </summary>
+        </member>
+        <member name="M:MyNote.Api.Controllers.NotesController.Delete(System.Int32)">
+            <summary>
+            Deletes a Note of a given Id
+            </summary>
+        </member>
+        <member name="M:MyNote.Api.Controllers.NotesController.GetByAccessLink(System.String)">
+            <summary>
+            Get specific note by read only direct link.
+            </summary>
+            <param name="accessLink"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyNote.Api.Controllers.NotesController.CreateAccessLink(System.Int32)">
+            <summary>
+            Create read only direct link to note.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyNote.Api.Controllers.NotesController.DeleteNoteAccessLink(System.Int32)">
+            <summary>
+             Delete note read only direct link.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

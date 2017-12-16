@@ -16,7 +16,7 @@ namespace MyNote.Api
                 {
                     var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
                     var commentsFileName = Assembly.GetExecutingAssembly().GetName().Name + ".XML";
-                    var commentsFile = Path.Combine(baseDirectory, commentsFileName);
+                    var commentsFile = Path.Combine(baseDirectory, "App_Data", commentsFileName);
 
                     c.SingleApiVersion("v1", "MyNote.Api");
                     c.IncludeXmlComments(commentsFile);
