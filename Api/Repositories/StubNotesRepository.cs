@@ -14,7 +14,7 @@ namespace MyNote.Api.Repositories
             new Note
             {
                 Id = 1,
-                UserId = 1,
+                Owner = "User1",
                 Title = "First Title",
                 Lead = "First lead text",
                 Content =
@@ -24,7 +24,7 @@ namespace MyNote.Api.Repositories
             new Note
             {
                 Id = 2,
-                UserId = 1,
+                Owner = "User1",
                 Title = "Second Title",
                 Lead = "Second lead text",
                 Content =
@@ -34,7 +34,7 @@ namespace MyNote.Api.Repositories
             new Note
             {
                 Id = 3,
-                UserId = 1,
+                Owner = "User1",
                 Title = "Third Title",
                 Lead = "Third lead text",
                 Content =
@@ -44,7 +44,7 @@ namespace MyNote.Api.Repositories
             new Note
             {
                 Id = 4,
-                UserId = 1,
+                Owner = "User1",
                 Title = "Fourth Title",
                 Lead = "Fourth lead text",
                 Content =
@@ -59,9 +59,9 @@ namespace MyNote.Api.Repositories
             return Task.Run(() => notes.First(n => n.Id == id));
         }
 
-        public Task<IEnumerable<NoteDigest>> GetAllNoteDigestByUserId(int userId)
+        public Task<IEnumerable<NoteDigest>> GetAllNoteDigestByUser(string userName)
         {
-            return Task.Run(() => notes.Where(n => n.UserId == userId).Select(n => (NoteDigest)n));
+            return Task.Run(() => notes.Where(n => n.Owner == userName).Select(n => (NoteDigest)n));
         }
 
         public Task Insert(Note note)

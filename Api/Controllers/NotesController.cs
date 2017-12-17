@@ -28,7 +28,7 @@ namespace MyNote.Api.Controllers
         [ResponseType(typeof(IEnumerable<NoteDigest>))]
         public async Task<IHttpActionResult> GetAll()
         {
-            var noteList = await notesRepository.GetAllNoteDigestByUserId(1);
+            var noteList = await notesRepository.GetAllNoteDigestByUser(User.Identity.Name);
             return Ok(noteList);
         }
 
@@ -41,8 +41,9 @@ namespace MyNote.Api.Controllers
         [ResponseType(typeof(Note))]
         public async Task<IHttpActionResult> Get(int id)
         {
+            var noteList = await notesRepository.GetAllNoteDigestByUser(User.Identity.Name);
             var note = await notesRepository.Get(id);
-            if (note == null)
+            if (note == null || note.Owner != User.Identity.Name)
             {
                 return NotFound();
             }
@@ -56,6 +57,18 @@ namespace MyNote.Api.Controllers
         [ResponseType(typeof(Note))]
         public async Task<IHttpActionResult> Post([FromBody]Note note)
         {
+            note.Created = DateTime.Now;
+            note.ModifiedBy = User.Identity.Name;
+            note.Modified = DateTime.Now;
+            note.Owner = User.Identity.Name;
+
+            ModelState.Clear();
+            Validate(note);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             await notesRepository.Insert(note);
             return Ok(note);
         }
@@ -68,6 +81,16 @@ namespace MyNote.Api.Controllers
         public async Task<IHttpActionResult> Put(int id, [FromBody]Note note)
         {
             note.Id = id;
+            note.ModifiedBy = User.Identity.Name;
+            note.Modified = DateTime.Now;
+            note.Owner = User.Identity.Name;
+
+            ModelState.Clear();
+            Validate(note);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             await notesRepository.Update(note);
             return Ok(note);
         }

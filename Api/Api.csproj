@@ -175,6 +175,11 @@
     <Compile Include="AutofacModul.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Migrations\201712171757100_Audit.cs" />
+    <Compile Include="Migrations\201712171757100_Audit.Designer.cs">
+      <DependentUpon>201712171757100_Audit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AuditEntry.cs" />
     <Compile Include="MyNoteContext.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Migrations\201711251941202_Initial.cs" />
@@ -201,12 +206,17 @@
     <Compile Include="WorkerRole.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201711251941202_Initial.resx">
       <DependentUpon>201711251941202_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712171757100_Audit.resx">
+      <DependentUpon>201712171757100_Audit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

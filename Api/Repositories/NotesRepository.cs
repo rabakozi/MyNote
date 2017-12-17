@@ -32,12 +32,12 @@ namespace MyNote.Api.Repositories
             }
         }
 
-        public async Task<IEnumerable<NoteDigest>> GetAllNoteDigestByUserId(int userId)
+        public async Task<IEnumerable<NoteDigest>> GetAllNoteDigestByUser(string userName)
         {
             using (var ctx = new MyNoteContext())
             {
-                var notes = await ctx.Notes.Where(n => n.UserId == userId).ToListAsync();
-                return (IEnumerable<Note>)notes;
+                var notes = await ctx.Notes.Where(n => n.Owner == userName).OrderByDescending(n => n.Created).ToListAsync();
+                return notes;
             }
         }
 
