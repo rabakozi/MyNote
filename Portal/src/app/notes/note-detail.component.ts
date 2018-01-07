@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { INote } from "./note";
 import { NoteService } from "./note.service"
 
@@ -13,7 +13,9 @@ export class NoteDetailComponent implements OnInit {
   note: INote;
   isNew: boolean;
 
-  constructor(private route: ActivatedRoute, private noteService: NoteService) { }
+  constructor(private route: ActivatedRoute,
+    private noteService: NoteService,
+    private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -64,24 +66,31 @@ export class NoteDetailComponent implements OnInit {
   }
 
   createNote() {
+    this.note.lead = this.extractLead(this.note.content);
     this.noteService.createNote(this.note)
       .subscribe(response => {
         this.isNew = false;
         this.noteService.emitChange({ action: 'create', subject: response });
+        this.router.navigate(['/notes/' + response.id]);
       });
   }
 
   updateNote() {
+    this.note.lead = this.extractLead(this.note.content);
     this.noteService.updateNote(this.note)
       .subscribe(response => {
         this.noteService.emitChange({ action: 'update', subject: response });
       });
   }
 
+  private extractLead(content: string) : string {
+    return content.substr(0, 150).replace(/\n/g, " ");
+  }
+
   private getEmptyNote(): INote {
     return {
       id: 0,
-      userId: 1,
+      owner: '',
       title: '',
       lead: '',
       content: ''

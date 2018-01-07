@@ -11,6 +11,10 @@ namespace MyNote.Api
                 .RegisterType<NotesRepository>()
                 .As<INotesRepository>()
                 .SingleInstance();
+            builder
+                .RegisterType<AuditRepository>()
+                .As<IAuditRepository>()
+                .SingleInstance();
             //builder
             //    .RegisterType<UsersRepository>()
             //    .As<IUsersRepository>()

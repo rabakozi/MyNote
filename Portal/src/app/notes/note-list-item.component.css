@@ -11,6 +11,28 @@ a.btn .fa {
   color: #255f7c;
 }
 
-a.btn .fa:hover {
-  color: #00324d
+  a.btn .fa:hover {
+    color: #00324d
+  }
+
+.three-lines {
+  margin: 10px;
+  margin-left: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
+
+.note-list-item {
+  position: relative;
+}
+
+  .note-list-item.selected a {
+    background-color: #c5c19d;
+  }
+
+  .note-list-item.selected div {
+    background-color: #c5c19d;
+  }

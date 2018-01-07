@@ -14,10 +14,12 @@ namespace MyNote.Api.Controllers
     public class AccountController : ApiController
     {
         private AuthRepository repo = null;
+        private readonly IAuditRepository auditRepository;
 
-        public AccountController()
+        public AccountController(IAuditRepository auditRepository)
         {
             repo = new AuthRepository();
+            this.auditRepository = auditRepository;
         }
 
         // POST api/Account/Register
@@ -33,6 +35,7 @@ namespace MyNote.Api.Controllers
             IdentityResult result = await repo.RegisterUser(userModel);
 
             IHttpActionResult errorResult = GetErrorResult(result);
+            auditRepository.RegisterUser(userModel, result);
 
             if (errorResult != null)
             {

@@ -18,10 +18,12 @@ namespace MyNote.Api.Controllers
     public class NotesController : ApiController
     {
         private readonly INotesRepository notesRepository;
+        private readonly IAuditRepository auditRepository;
 
-        public NotesController(INotesRepository notesRepository)
+        public NotesController(INotesRepository notesRepository, IAuditRepository auditRepository)
         {
             this.notesRepository = notesRepository;
+            this.auditRepository = auditRepository;
         }
 
         [Route("")]
@@ -70,6 +72,7 @@ namespace MyNote.Api.Controllers
             }
 
             await notesRepository.Insert(note);
+            await auditRepository.CreateNote(note);
             return Ok(note);
         }
 
@@ -92,6 +95,7 @@ namespace MyNote.Api.Controllers
                 return BadRequest(ModelState);
             }
             await notesRepository.Update(note);
+            await auditRepository.UpdateNote(note);
             return Ok(note);
         }
 
@@ -102,6 +106,7 @@ namespace MyNote.Api.Controllers
         public async Task<IHttpActionResult> Delete(int id)
         {
             await notesRepository.Delete(id);
+            await auditRepository.DeleteNote(new Note { Id = id, Owner = User.Identity.Name });
             return Ok();
         }
 
@@ -146,6 +151,7 @@ namespace MyNote.Api.Controllers
                 note.ShareLink = Guid.NewGuid().ToString("N").ToUpper();
                 note.Modified = DateTime.Now;
                 await notesRepository.Update(note);
+                await auditRepository.ShareNote(note);
             }
 
             return Ok(note);
@@ -171,6 +177,7 @@ namespace MyNote.Api.Controllers
                 note.ShareLink = null;
                 note.Modified = DateTime.Now;
                 await notesRepository.Update(note);
+                await auditRepository.UnshareNote(note);
             }
 
             return Ok(note);

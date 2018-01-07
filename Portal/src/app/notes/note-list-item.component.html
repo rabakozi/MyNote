@@ -1,15 +1,15 @@
-<div style="position: relative" >
+<div class="note-list-item" [class.selected]="isSelected">
   <a href="#" [routerLink]="['/notes', note.id]" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">{{note.title}}</h5>
-      <small>3 days ago</small>
+      <h4 class="mb-1">{{note.title}}</h4>
+      <small>{{note.modified | timeAgo}}</small>
     </div>
-    <p class="mb-1">{{note.lead}}</p>
+    <p class="mb-1 three-lines">{{note.lead}}</p>
   </a>
   <div style="position: absolute; top: 5px; right: 5px"
        (mouseenter)="showCopyIcon()"
        (mouseleave)="hideCopyIcon()">
-    <a class="btn btn-link btn-sm" style="padding-right: 0;" data-toggle="tooltip" [title]="note.shareLink ? 'Share note' : 'Cancel sharing'" (click)="shareNote()">
+    <a class="btn btn-link btn-sm" style="padding-right: 0;" data-toggle="tooltip" [title]="note.shareLink ? 'Cancel sharing' : 'Share note'" (click)="shareNote()">
       <i class="fa fa-2x" [ngClass]="note.shareLink ? 'fa-share-alt-square' : 'fa-share-alt'" aria-hidden="true"></i>
     </a>
     <a *ngIf="shareUrl" style="position: absolute; left: 0; top: 30px; cursor: pointer;"

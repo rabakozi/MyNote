@@ -11,6 +11,7 @@ namespace MyNote.Api
     {
 
         public MyNoteContext() : base(RoleEnvironment.GetConfigurationSettingValue("MyNoteContext"))
+            //public MyNoteContext() : base(("MyNoteContext"))
         {
             string connString;
 

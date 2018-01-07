@@ -8,6 +8,7 @@ import { NoteComponent } from './note.component';
 import { NoteListItemComponent } from './note-list-item.component';
 import { ClipboardModule } from 'ngx-clipboard';
 import { SharedNoteComponent } from './shared-note.component';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { SharedNoteComponent } from './shared-note.component';
       { pathMatch: 'full', path: 'viewnote/:id', component: SharedNoteComponent }
     ])
   ],
-  declarations: [NoteDetailComponent, NoteComponent, NoteListItemComponent, SharedNoteComponent],
+  declarations: [NoteDetailComponent, NoteComponent, NoteListItemComponent, SharedNoteComponent, TimeAgoPipe],
   exports: [NoteComponent]
 })
 export class NoteModule { }

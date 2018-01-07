@@ -50,8 +50,8 @@ export class NoteService {
     return this.http.post<INote>(this.apiEndpoint, body, { headers: this.headers });
   }
 
-  deleteNote(id: number): Observable<any> {
-    return this.http.delete(this.apiEndpoint + '/' + id);
+  deleteNote(noteId: number): Observable<any> {
+    return this.http.delete(this.apiEndpoint + '/' + noteId);
   }
 
   getByAccessLink(link: string): Observable<INote> {

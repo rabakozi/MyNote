@@ -1,12 +1,12 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button class="btn btn-success navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <button class="btn btn-success navbar-toggle" (click)="isExpanded = !isExpanded" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="glyphicon glyphicon-align-justify"></span>
       </button>
       <a [routerLink]="['/home']" class="navbar-brand" href="#!"><i class="fa fa-xing fa-md" aria-hidden="true"></i>Note</a>
     </div>
-    <div class="collapse navbar-collapse">
+    <div class="collapse navbar-collapse" [class.in]="isExpanded">
       <ul class="nav navbar-top-links navbar-right">
         <li *ngIf="authentication.isAuthenticated">
           <a [routerLink]="['/notes']" class="nav-link" href="#">Notes</a>

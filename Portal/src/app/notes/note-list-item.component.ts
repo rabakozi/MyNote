@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { INote } from "./note";
 import { NoteService } from "./note.service";
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -13,10 +13,21 @@ export class NoteListItemComponent implements OnInit {
 
   @Input() note: INote;
   shareUrl: string;
+  isSelected: boolean;
 
-  constructor(private noteService: NoteService, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private noteService: NoteService,
+    private router: Router) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      if (!params['id'] || params['id'] === 'new') {
+        return;
+      }
+      let id = params['id'];
+      this.isSelected = this.note.id == id;
+    });
   }
 
   shareNote() {
@@ -37,8 +48,11 @@ export class NoteListItemComponent implements OnInit {
 
   deleteNote()
   {
-    this.noteService.deleteNote(this.note.id);
-    this.noteService.emitChange({ id: this.note.id, action: "delete" });
+    this.noteService.deleteNote(this.note.id)
+      .subscribe(() => {
+//debugger;
+      });
+    this.noteService.emitChange({ action: "delete", subject: this.note });
   }
 
 
