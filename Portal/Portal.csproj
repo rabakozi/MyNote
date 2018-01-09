@@ -68,6 +68,7 @@
     <TypeScriptCompile Include="src\app\notes\note.ts" />
     <TypeScriptCompile Include="src\app\notes\shared-note.component.spec.ts" />
     <TypeScriptCompile Include="src\app\notes\shared-note.component.ts" />
+    <TypeScriptCompile Include="src\app\notes\time-ago-pipe.ts" />
     <TypeScriptCompile Include="src\environments\environment.prod.ts" />
     <TypeScriptCompile Include="src\environments\environment.ts" />
     <TypeScriptCompile Include="src\main.ts" />
