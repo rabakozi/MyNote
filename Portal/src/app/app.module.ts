@@ -33,7 +33,7 @@ import { NoteService } from "./notes/note.service";
     AppRoutingModule,
     AuthModule
   ],
-  providers: [AuthService, LocalStorageService, NoteService,
+  providers: [AuthService, LocalStorageService, NoteService, 
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

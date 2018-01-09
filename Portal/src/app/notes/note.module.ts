@@ -8,7 +8,7 @@ import { NoteComponent } from './note.component';
 import { NoteListItemComponent } from './note-list-item.component';
 import { ClipboardModule } from 'ngx-clipboard';
 import { SharedNoteComponent } from './shared-note.component';
-import { TimeAgoPipe } from 'time-ago-pipe';
+import { TimeAgoPipe } from './time-ago-pipe';
 
 @NgModule({
   imports: [
