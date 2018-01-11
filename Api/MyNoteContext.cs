@@ -10,8 +10,10 @@ namespace MyNote.Api
     public class MyNoteContext : IdentityDbContext<IdentityUser>
     {
 
+        // before deployment:
         public MyNoteContext() : base(RoleEnvironment.GetConfigurationSettingValue("MyNoteContext"))
-            //public MyNoteContext() : base(("MyNoteContext"))
+        // locally    
+        //public MyNoteContext() : base(("MyNoteContext"))
         {
             string connString;
 

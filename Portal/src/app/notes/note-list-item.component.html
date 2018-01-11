@@ -2,7 +2,7 @@
   <a href="#" [routerLink]="['/notes', note.id]" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
       <h4 class="mb-1">{{note.title}}</h4>
-      <small>{{note.modified | timeAgo}}</small>
+      <small>{{timeAgo(note.modified)}}</small>
     </div>
     <p class="mb-1 three-lines">{{note.lead}}</p>
   </a>
