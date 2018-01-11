@@ -2,6 +2,8 @@ import { Component, OnInit, Input, NgZone, ChangeDetectorRef } from '@angular/co
 import { INote } from "./note";
 import { NoteService } from "./note.service";
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from "../../environments/environment";
+import { PlatformLocation } from '@angular/common';
 
 
 @Component({
@@ -19,6 +21,7 @@ export class NoteListItemComponent implements OnInit {
     private route: ActivatedRoute,
     private noteService: NoteService,
     private router: Router,
+    private platformLocation: PlatformLocation,
     private ngZone: NgZone,
     private changeDetectorRef: ChangeDetectorRef) { }
 
@@ -60,7 +63,7 @@ export class NoteListItemComponent implements OnInit {
 
   showCopyIcon() {
     if (this.note.shareLink) {
-      this.shareUrl = "http://localhost:4200/viewnote/" + this.note.shareLink;
+      this.shareUrl = (this.platformLocation as any).location.origin + "/viewnote/" + this.note.shareLink;
     }
   }
 
