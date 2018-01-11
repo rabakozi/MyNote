@@ -20,6 +20,8 @@ export class AppComponent implements OnInit {
   public webApiEndPoint: string;
   public imagesDirectory: string;
 
+  public isExpanded: boolean;
+
   public authentication: IAuthentication;
 
   constructor(
